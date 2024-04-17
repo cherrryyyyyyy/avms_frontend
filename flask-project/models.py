@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from extension import db
 
 class Element(db.Model):
@@ -18,4 +19,5 @@ class Element(db.Model):
             element.id = ret[0]
             element.element_name = ret[1]
             element.element_class = ret[2]
+            db.session.add(element)
         db.session.commit()
