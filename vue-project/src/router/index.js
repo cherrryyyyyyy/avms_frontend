@@ -4,6 +4,8 @@ import Layout from '@/views/layout/app-index.vue'
 import Login from '@/views/login/app-index.vue'
 import Home from '@/views/home/Home-index.vue'
 
+const Elements = ()=>import('@/views/elements/element-index.vue')
+
 Vue.use(VueRouter)
 
 const routes=[
@@ -15,6 +17,11 @@ const routes=[
             path:'/',
             name:'home',
             component:Home,
+        },
+        {
+            path:'/elements',
+            name:'elements',
+            component: Elements
         }
     ]
     },
