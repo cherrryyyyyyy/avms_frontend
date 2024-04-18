@@ -4,7 +4,8 @@
 vue-flask前后端项目
 
 #### 软件架构
-软件架构说明
+vue负责实现前端界面
+server文件夹中使用node.js与flask，基于SQlite3数据库实现后端接口。
 
 
 #### 安装教程
