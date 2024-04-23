@@ -1,6 +1,6 @@
 <template>
 <div>
-    组件管理
+    <router-view></router-view>
 </div>
 </template>
   

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Layout from '@/views/layout/app-index.vue'
 import Login from '@/views/login/app-index.vue'
 import Home from '@/views/home/Home-index.vue'
+import Elements_all from '@/views/elements/elements_all/elements_all.vue'
+import Elements_change from '@/views/elements/elements_change/elements_change.vue'
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -21,7 +23,19 @@ const routes=[
         {
             path:'/elements',
             name:'elements',
-            component: Elements
+            component: Elements,
+            children:[
+                {
+                    path:'all',
+                    name:Elements_all,
+                    component: Elements_all
+                },
+                {
+                    path:'change',
+                    name:Elements_change,
+                    component: Elements_change
+                }
+            ]
         }
     ]
     },
@@ -33,7 +47,7 @@ const routes=[
 ]
 
 const router = new VueRouter({
-    mode:'hash',
+    mode:'history',
     base: process.env.BASE_URL,
     routes
 })

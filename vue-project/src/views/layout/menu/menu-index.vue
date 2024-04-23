@@ -20,10 +20,12 @@
           <span>组件管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/elements/all">组件查看</el-menu-item>
+          <el-menu-item index="/elements/all"><i class="el-icon-s-grid"></i>
+            <span>查看组件</span></el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group>
-          <el-menu-item index="/elements/change">组件更改</el-menu-item>
+          <el-menu-item index="/elements/change"><i class="el-icon-s-grid"></i>
+            <span>组件更改</span></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
@@ -34,9 +36,9 @@
         <i class="el-icon-document"></i>
         <span slot="title">导航三</span>
       </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+      <el-menu-item index="/login">
+        <i class="el-icon-user-solid"></i>
+        <span slot="title">人员登录</span>
       </el-menu-item>
     </el-menu>
     </div>

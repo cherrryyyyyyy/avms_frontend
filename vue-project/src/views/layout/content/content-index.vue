@@ -20,10 +20,7 @@
 <style lang="less" scoped>
 .header{
     height:50px;
-    width:1900px;
     background: #1e78bf;
-
-
 }
 
 </style>
