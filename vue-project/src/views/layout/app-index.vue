@@ -52,5 +52,6 @@ export default {
     padding-left: 64px;
     width:100%;
   }
+  //font-family: "仿宋","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
 }
 </style>
