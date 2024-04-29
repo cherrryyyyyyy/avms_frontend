@@ -7,7 +7,10 @@
         </h3>
         </div>
       <!--可变内容-->
-      <router-view></router-view>
+      <div class="wrapper">
+        <router-view></router-view>
+      </div>
+      
     </div>
   </template>
   
@@ -21,6 +24,9 @@
 .header{
     height:50px;
     background: #1e78bf;
+}
+.wrapper{
+  padding: 10px;
 }
 
 </style>
