@@ -43,13 +43,15 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="pagination">
             <Pagination></Pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import Pagination from '@/components/pagination/page-tabs.vue'
+import Pagination from '@/component/pagination/page-tabs.vue'
 export default {
     components:{
         Pagination
@@ -106,6 +108,10 @@ export default {
 
     /deep/ .active-header{
         color: #333;
+    }
+    
+    .paginationP{
+        padding:20px;
     }
 }
 </style>
