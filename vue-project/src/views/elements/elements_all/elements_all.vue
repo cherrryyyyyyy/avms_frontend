@@ -31,7 +31,7 @@
                 </el-table-column>
                 <el-table-column prop="element_class" label="组件类型" width="180" align="center">
                 </el-table-column>
-                <el-table-column prop="element_name" label="组件名称" align="center">
+                <el-table-column prop="element_name" label="组件名称" align="center" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column label="操作" align="center"> 
                     <!--使用template拿取整行的数据 -->
@@ -43,13 +43,17 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <Pagination></Pagination>
         </div>
     </div>
 </template>
 
 <script>
-
+import Pagination from '@/components/pagination/page-tabs.vue'
 export default {
+    components:{
+        Pagination
+    },
     data() {
         return {
             formInline: {
