@@ -27,11 +27,11 @@
         <div class="content">
             <el-table :data="tableData" style="width: 100% " stripe border header-row-class-name="active-header" >
                 <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column prop="date" label="日期" width="180" align="center">
+                <el-table-column prop="id" label="组件编号" width="180" align="center">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" width="180" align="center">
+                <el-table-column prop="element_class" label="组件类型" width="180" align="center">
                 </el-table-column>
-                <el-table-column prop="address" label="地址" align="center">
+                <el-table-column prop="element_name" label="组件名称" align="center">
                 </el-table-column>
                 <el-table-column label="操作" align="center"> 
                     <!--使用template拿取整行的数据 -->
@@ -55,23 +55,7 @@ export default {
             formInline: {
                 name: ''
             },
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎1',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎2',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }]
+            tableData: []
         }
     },
     methods: {
@@ -83,7 +67,15 @@ export default {
         },
         handleDelete(index, row) {
             console.log(index, row);
+        },
+        async elementList(){
+            let res = await this.$api.elementList()
+            console.log('输出',res)
+            this.tableData = res.data
         }
+    },
+    created(){
+        this.elementList();
     }
 }
 </script>
