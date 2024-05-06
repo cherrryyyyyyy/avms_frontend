@@ -4,8 +4,8 @@ import axios from "axios";
 import base from "./base";
 
 const api ={
-    elementList(){
-        return axios.get(base.elementList);
+    elementList(params){
+        return axios.get(base.elementList,{params})
     }
 };
 

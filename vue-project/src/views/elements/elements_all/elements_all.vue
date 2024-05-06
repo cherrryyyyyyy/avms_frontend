@@ -44,7 +44,7 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-            <Pagination></Pagination>
+            <Pagination :total="total" @CurrentChange="CurrentChange"></Pagination>
             </div>
         </div>
     </div>
@@ -61,7 +61,8 @@ export default {
             formInline: {
                 name: ''
             },
-            tableData: []
+            tableData: [],
+            total:10,
         }
     },
     methods: {
@@ -73,15 +74,19 @@ export default {
         },
         handleDelete(index, row) {
             console.log(index, row);
+        },CurrentChange(val){
+            console.log('頁嗎',val);
+            this.elementList(val);
         },
-        async elementList(){
-            let res = await this.$api.elementList()
-            console.log('输出',res)
-            this.tableData = res.data
+        async elementList(page){
+            let res = await this.$api.elementList ({page})
+            console.log('输出',res,page) ;
+            this.tableData = res.data.data ;
+            this.total = res.data.length ;
         }
     },
     created(){
-        this.elementList();
+        this.elementList(1);
     }
 }
 </script>

@@ -3,18 +3,37 @@ const router = express.Router();
 
 const db = require('./sqlite')
 
-router.get("/api/elements/elementsList",(req , res)=>{
-    const sql = 'SELECT * FROM element';
+router.get("/elements/elementsList" ,function(req, res){
+    
+    let page = req.query.page || 1;
+    console.log(page) ;
+    const sqllen = "SELECT * from element where id" ;
+    db.all(sqllen, [], (err, rows1) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'An error occurred' });
+          return;
+        }
+        const len = rows1.length;
+
+        const sql = "SELECT * FROM element order by id asc limit 8 offset " + (page - 1) * 8;
+        console.log(sql);
     db.all(sql, [], (err, rows) => {
         if (err) {
           console.error(err);
           res.status(500).json({ error: 'An error occurred' });
           return;
         }
-    
-        // 处理查询结果
-        res.json(rows);
+
+        res.send({
+            data: rows,
+            length: len,
+        });
       });
+      });
+
+    
+    
 })
 
 module.exports = router
