@@ -1,7 +1,12 @@
 <template>
-  <div class="layout">
-    <div class="menu">
-      <Menu :is_collapse="is_collapse" @changeMenu="changeMenu"></Menu>
+  <!--
+    layout包在最外侧，里面包含menu左侧导航栏和content右侧内容(包含顶部区域和内容区域)部分
+    is_collapse变量定义为判断左侧导航栏是否缩进
+    引入menu和content的components，并进行显示
+  -->
+  <div class="layout">  
+    <div class="menu">   
+      <Menu :is_collapse="is_collapse" @changeMenu="changeMenu"></Menu> 
     </div>
     <div class="content" :class="{small:is_collapse}">
       <Content :is_collapse="is_collapse"></Content>
