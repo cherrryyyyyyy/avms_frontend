@@ -6,6 +6,9 @@ import base from "./base";
 const api ={
     elementList(params){
         return axios.get(base.elementList,{params})
+    },
+    search(params){
+        return axios.get(base.search,{params})
     }
 };
 

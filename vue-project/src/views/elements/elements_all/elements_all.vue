@@ -66,8 +66,12 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+        async onSubmit() {
             console.log('submit!', this.formInline);
+            let search = this.formInline.name;
+            let res = await this.$api.search({search});
+            this.tableData = res.data.data;
+            this.total = res.data.length;
         },
         handleEdit(index, row) {
             console.log(index, row);

@@ -36,4 +36,21 @@ router.get("/elements/elementsList" ,function(req, res){
     
 })
 
+router.get("/elements/search" ,function(req ,res ){
+    var search = req.query.search;
+    const sql = "SELECT * FROM element where element_name like '%"  + search + "%'";
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred' });
+        return;
+      }
+
+      res.send({
+          data: rows,
+          length:rows.length
+      });
+    });
+})
+
 module.exports = router
