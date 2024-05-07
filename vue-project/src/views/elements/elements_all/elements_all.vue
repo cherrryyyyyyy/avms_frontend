@@ -13,6 +13,9 @@
                 </el-form>
             </div>
             <div class="group">
+                <!--
+                    功能待实现
+                -->
                 <el-button size="small" type="warning" icon="el-icon-plus">添加组件</el-button>
                 <el-button size="small" type="danger" icon="el-icon-delete">批量删除</el-button>
             </div>
@@ -34,8 +37,9 @@
                 <el-table-column prop="element_name" label="组件名称" align="center" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column label="操作" align="center">
-                    <!--使用template拿取整行的数据 -->
+                    <!--使用template拿取整行的数据 scope.$index 当前行索引号， scope.row 当前行内容-->
                     <template slot-scope="scope">
+                        <!--编辑功能待实现-->
                         <el-button type="primary" size="mini" icon="el-icon-edit"
                             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 
@@ -53,6 +57,7 @@
 </template>
 
 <script>
+//导入分页组件
 import Pagination from '@/component/pagination/page-tabs.vue'
 export default {
     components: {
@@ -60,15 +65,18 @@ export default {
     },
     data() {
         return {
+            //formInline为输入栏内容
             formInline: {
                 name: ''
             },
+            //tableData为当前页显示数据，total为总数据条数，默认为10
             tableData: [],
             total: 10,
         }
     },
     methods: {
         async onSubmit() {
+            //调用api search方法，传参将formInline.name传给search
             console.log('submit!', this.formInline);
             let search = this.formInline.name;
             let res = await this.$api.search({ search });
@@ -78,13 +86,16 @@ export default {
         handleEdit(index, row) {
             console.log(index, row);
         },
+        //调用delete api方法， 
         handleDelete(index, row) {
             console.log(index, row);
+            //this.$confirm在element-ui组件中定义，为弹出提示框
             this.$confirm('确定删除当前组件?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
+                //调用deleteElements函数
                 this.deleteElements(row.id);
                 
             }).catch(() => {
@@ -107,6 +118,7 @@ export default {
             this.total = res.data.length;
         },
         async deleteElements(id){
+            //调用api
             let res = await this.$api.deleteElements({id});
             console.log('删除--------',res.data);
             if (res.data.status == 200){
@@ -115,6 +127,7 @@ export default {
                     message: '删除成功!'
                 });
             }
+            //刷新界面
             this.elementList(1);
         }
     },

@@ -1,3 +1,6 @@
+<!--
+  分页组件，可以在多个页面重用，只需要导入组件 保证变量独立
+-->
 <template>
     <div>
         <!--
@@ -34,9 +37,11 @@
             }
       },
         methods: {
+          //目前没有用到，此为处理每页显示条目数的函数，目前固定每页条目数为8
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
+      //处理页面跳转函数
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.$emit('CurrentChange',val);
@@ -45,6 +50,7 @@
     data() {
       return {
         currentPage: 1
+        //默认页码为1
       };
     }
     }

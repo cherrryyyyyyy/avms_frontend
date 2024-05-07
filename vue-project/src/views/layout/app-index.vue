@@ -6,8 +6,14 @@
   -->
   <div class="layout">  
     <div class="menu">   
+      <!--
+        定义响应式变量和注册事件
+      -->
       <Menu :is_collapse="is_collapse" @changeMenu="changeMenu"></Menu> 
     </div>
+    <!--
+      此处class="{small:is_collapse}"，使class能够随着is_collapse的变化而变化，is_collapse为真，则class则会用small覆盖掉content，显示small的格式
+    -->
     <div class="content" :class="{small:is_collapse}">
       <Content :is_collapse="is_collapse"></Content>
     </div>
@@ -24,6 +30,7 @@ export default {
   },
   data(){
     return{
+      //is_collapse默认为假，即不缩进
       is_collapse:false
     }
   },
