@@ -9,6 +9,9 @@ const api ={
     },
     search(params){
         return axios.get(base.search,{params})
+    },
+    deleteElements(params){
+        return axios.get(base.deleteElements,{params})
     }
 };
 

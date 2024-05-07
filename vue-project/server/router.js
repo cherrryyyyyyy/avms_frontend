@@ -6,7 +6,7 @@ const db = require('./sqlite')
 router.get("/elements/elementsList" ,function(req, res){
     
     let page = req.query.page || 1;
-    console.log(page) ;
+    //console.log(page) ;
     const sqllen = "SELECT * from element where id" ;
     db.all(sqllen, [], (err, rows1) => {
         if (err) {
@@ -17,7 +17,7 @@ router.get("/elements/elementsList" ,function(req, res){
         const len = rows1.length;
 
         const sql = "SELECT * FROM element order by id asc limit 8 offset " + (page - 1) * 8;
-        console.log(sql);
+        //console.log(sql);
     db.all(sql, [], (err, rows) => {
         if (err) {
           console.error(err);
@@ -51,6 +51,28 @@ router.get("/elements/search" ,function(req ,res ){
           length:rows.length
       });
     });
+})
+
+
+router.get("/elements/deleteElements" ,function(req , res){
+    var id = req.query.id;
+    const arr = [id];
+    const sql = "delete from element where id = " + arr;
+    console.log(sql);
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred' });
+        return;
+      }
+
+      res.send({
+          data: rows,
+          length:rows.length,
+          status:200
+      });
+    });
+    
 })
 
 module.exports = router
