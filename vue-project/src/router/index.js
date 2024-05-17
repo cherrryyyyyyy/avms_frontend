@@ -5,6 +5,7 @@ import Login from '@/views/login/app-index.vue'
 import Home from '@/views/home/Home-index.vue'
 import Elements_all from '@/views/elements/elements_all/elements_all.vue'
 import Elements_change from '@/views/elements/elements_change/elements_change.vue'
+import Target from '@/views/target/target-index.vue'
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -36,6 +37,11 @@ const routes=[
                     component: Elements_change
                 }
             ]
+        },
+        {
+            path:'/target',
+            name:'target',
+            component: Target,
         }
     ]
     },
@@ -48,7 +54,7 @@ const routes=[
 
 const router = new VueRouter({
     mode:'history',    
-    historyApiFallback: true,   //使用history模式，historyApiFallback使路由在刷新时从根节点
+    historyApiFallback: true,   //使用history模式，historyApiFallback使路由在刷新时从根节点进行刷新
     //base: process.env.BASE_URL,
     routes   //包含上面定义的路由
 })

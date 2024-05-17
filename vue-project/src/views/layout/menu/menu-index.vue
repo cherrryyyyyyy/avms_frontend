@@ -6,7 +6,7 @@
       <el-menu
       :default-active="$route.path"
       class="el-menu-vertical-demo"
-      background-color="#112f50"
+      background-color="#091527"
       text-color="#fff"
       active-text-color="#ffd04b" router :collapse="is_collapse">
       <el-menu-item index>
@@ -17,7 +17,7 @@
         <span slot="title">原子组件配置系统</span>
       </el-menu-item>
       <el-menu-item index="/">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <!--
@@ -26,7 +26,8 @@
         此submenu中包含两个子选项，查看组件和组件更改，分别对应/elements/all和/elements/change路由
         el-menu-item-group表明这两个选项在submenu下同属一组
       -->
-      <el-submenu index="/elements">
+      <!--
+        <el-submenu index="/elements">
         <template slot="title">
           <i class="el-icon-s-tools"></i>
           <span>组件管理</span>
@@ -40,17 +41,23 @@
             <span>组件更改</span></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+      -->
+      <el-menu-item index="/target">
+        <i class="el-icon-aim"></i>
+        <span slot="title">目标</span>
       </el-menu-item>
-      <el-menu-item index="3" disabled>
+      <el-menu-item index="/tasks">
+        <i class="el-icon-postcard"></i>
+        <span slot="title">任务</span>
+      </el-menu-item>
+      <el-menu-item index="/result">
         <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
+        <span slot="title">结果</span>
       </el-menu-item>
-      <el-menu-item index="/login">
-        <i class="el-icon-user-solid"></i>
-        <span slot="title">人员登录</span>
+      
+      <el-menu-item index="/management">
+        <i class="el-icon-setting"></i>
+        <span slot="title">管理</span>
       </el-menu-item>
     </el-menu>
     </div>
@@ -75,7 +82,7 @@
 .el-menu{
   border-right :0;
   .is-active{
-    background: #1e78bf !important;
+    background: #5D90F7 !important;
     color: #fff !important;
   }
 }
