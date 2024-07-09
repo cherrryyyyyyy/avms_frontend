@@ -46,7 +46,7 @@
         <i class="el-icon-aim"></i>
         <span slot="title">目标</span>
       </el-menu-item>
-      <el-menu-item index="/tasks">
+      <el-menu-item index="/task">
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
@@ -55,7 +55,7 @@
         <span slot="title">结果</span>
       </el-menu-item>
       
-      <el-menu-item index="/management">
+      <el-menu-item index="/manage">
         <i class="el-icon-setting"></i>
         <span slot="title">管理</span>
       </el-menu-item>

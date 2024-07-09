@@ -6,6 +6,9 @@ import Home from '@/views/home/Home-index.vue'
 import Elements_all from '@/views/elements/elements_all/elements_all.vue'
 import Elements_change from '@/views/elements/elements_change/elements_change.vue'
 import Target from '@/views/target/target-index.vue'
+import Task from '@/views/task/task-index.vue'
+import Result from '@/views/result/result-index.vue'
+import Manage from '@/views/manage/manage-index.vue'
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -42,6 +45,21 @@ const routes=[
             path:'/target',
             name:'target',
             component: Target,
+        },
+        {
+            path:'/task',
+            name:'tack',
+            component: Task,
+        },
+        {
+            path:'/result',
+            name:'result',
+            component: Result,
+        },
+        {
+            path:'/manage',
+            name:'manage',
+            component: Manage,
         }
     ]
     },

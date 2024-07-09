@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="header">
-            目标顶部区域
+            任务顶部区域
         </div>
     
         <div class="wrapper">
-            <h2>目标</h2>
+            <h2>任务</h2>
         </div>
     </div>
 </template>
