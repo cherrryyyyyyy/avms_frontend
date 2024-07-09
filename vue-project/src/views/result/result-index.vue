@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <div class="header">
-            目标顶部区域
-        </div>
-    
-        <div class="wrapper">
-            <h2>目标</h2>
-        </div>
+<div>
+    <div class="header">
+        结果顶部区域
     </div>
+
+    <div class="wrapper">
+        <h2>结果</h2>
+    </div>
+</div>
 </template>
   
 <script>
