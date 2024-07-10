@@ -42,7 +42,7 @@
         </el-menu-item-group>
       </el-submenu>
       -->
-      <el-menu-item index="/target">
+      <el-menu-item index="/target/index">
         <i class="el-icon-aim"></i>
         <span slot="title">目标</span>
       </el-menu-item>

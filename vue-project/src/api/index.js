@@ -13,7 +13,10 @@ const api ={
     },
     deleteElements(params){
         return axios.get(base.deleteElements,{params})
-    }
+    },
+    targetList(params){
+        return axios.get(base.targetList,{params})
+    },
 };
 
 export default api

@@ -1,11 +1,15 @@
 <template>
     <div>
         <div class="header">
-            目标顶部区域
+            <h3>
+                目标详情
+            </h3>
+            
         </div>
     
         <div class="wrapper">
-            <h2>目标</h2>
+            <h3>{{$route.query.target_id}}</h3>
+           
         </div>
     </div>
 </template>
@@ -13,7 +17,7 @@
 <script>
   
 export default {
-    
+    props:['target_id']
 }
 </script>
 

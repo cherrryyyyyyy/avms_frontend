@@ -4,11 +4,14 @@ import Layout from '@/views/layout/app-index.vue'
 import Login from '@/views/login/app-index.vue'
 import Home from '@/views/home/Home-index.vue'
 import Elements_all from '@/views/elements/elements_all/elements_all.vue'
+import Target from '@/views/target/target_index.vue'
 import Elements_change from '@/views/elements/elements_change/elements_change.vue'
-import Target from '@/views/target/target-index.vue'
+import Target_index from '@/views/target/target-index/target-index.vue'
 import Task from '@/views/task/task-index.vue'
 import Result from '@/views/result/result-index.vue'
 import Manage from '@/views/manage/manage-index.vue'
+import Add_target from '@/views/target/target_add/add-target.vue'
+import Target_Detail from '@/views/target/target_detail/target-detail.vue'
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -45,6 +48,23 @@ const routes=[
             path:'/target',
             name:'target',
             component: Target,
+            children:[
+                {
+                    path:'index',
+                    name: Target_index,
+                    component: Target_index
+                },
+                {
+                    path:'addtarget',
+                    name: Add_target,
+                    component: Add_target
+                },
+                {
+                    path:'targetdetail',
+                    name: Target_Detail,
+                    component: Target_Detail
+                }
+            ]
         },
         {
             path:'/task',

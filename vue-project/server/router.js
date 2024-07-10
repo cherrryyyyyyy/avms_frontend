@@ -85,4 +85,8 @@ router.get("/elements/deleteElements" ,function(req , res){
     
 })
 
+router.get("/target/targetList" ,function(req , res){
+  
+})
+
 module.exports = router
