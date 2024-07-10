@@ -25,9 +25,9 @@
                 </el-header>
                 <el-main>
                     <template>
-                        <el-table stripe="true"
+                        <el-table stripe=true
                           :data="Data"
-                          height="250"
+                          height=590
                           border
                           style="width: 100%">
                           <el-table-column
@@ -123,7 +123,7 @@ export default {
           value: '选项4',
           label: '按修改时间排序'
         }],
-        total : 10,
+        total : 20,
         Data: this.tableData,
       }
     },
@@ -136,7 +136,8 @@ export default {
             this.targetList(val);
         },
         async targetList(page) {
-            this.Data = this.tableData[page];
+            this.Data = this.tableData.slice((page-1)*10,page*10);
+            console.log(page);
         },
         TargetDetail(index, row){
           console.log(index, row);
@@ -148,6 +149,10 @@ export default {
             query:{ target_id : val} 
           })
         }
+    },
+    created() {
+        this.targetList(1);
+        this.total = this.tableData.length;
     }
 }
 </script>
