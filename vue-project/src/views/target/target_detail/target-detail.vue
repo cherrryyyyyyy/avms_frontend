@@ -2,13 +2,16 @@
     <div>
         <div class="header">
             <h3>
+                <el-button type="primary" @click="Goback" class="detailed" icon="el-icon-back">
+                    返回
+                </el-button>
                 目标详情
             </h3>
             
         </div>
     
         <div class="wrapper">
-            <h3>{{$route.query.target_id}}</h3>
+            <!--<h3>{{$route.query.target_id}}</h3>-->
            
         </div>
     </div>
@@ -17,7 +20,13 @@
 <script>
   
 export default {
-    props:['target_id']
+    props:['target_id'],
+    methods:
+    {
+        Goback(){
+            this.$router.push('/target/index')
+        }
+    }
 }
 </script>
 
