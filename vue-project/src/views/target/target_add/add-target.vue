@@ -69,9 +69,10 @@ export default {
         Goback(){
             this.$router.push('/target/index')
         },
-        submitForm(formName) {
+        submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.Insert2target(formName);
             alert('submit!');
           } else {
             console.log('error submit!!');
@@ -81,6 +82,14 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      async Insert2target(formName){
+        let res = await this.$api.Insert2target(this.$refs[formName].$data);
+        this.$message({
+                    type: 'info',
+                    message: '已成功添加'
+                });
+                console.log('输出', res);
       }
     }
 }

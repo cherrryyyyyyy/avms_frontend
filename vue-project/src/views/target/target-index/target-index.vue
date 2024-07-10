@@ -26,7 +26,7 @@
                 <el-main>
                     <template>
                         <el-table stripe="true"
-                          :data="tableData"
+                          :data="Data"
                           height="250"
                           border
                           style="width: 100%">
@@ -102,27 +102,14 @@ export default {
     components: {
         Pagination
     },
+    props: {
+      tableData:{
+        type : Array,
+        default: ()=>[],
+      }
+    },
     data() {
       return {
-        tableData: [{
-          target_id: 1,
-          target_name: '用于测试的目标',
-          target_describe: '用于测试的目标的描述123123123122313长长长长长长长长长长长长长长长长',
-          port_range: 'Nmap tcp top10',
-          target_range: '192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26',
-          create_date: '2024/07/21 15:23:34',
-          last_change_date: '2024/07/21 15:23:34'
-        },
-        {
-          target_id: 2,
-          target_name: '用于测试的目标1',
-          target_describe: '1用于测试的目标的描述123123123122313长长长长长长长长长长长长长长长长',
-          port_range: 'Nmap udp top 5',
-          target_range: '192.168.0.1/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26',
-          create_date: '2023/07/22 15:24:31',
-          last_change_date: '2023/09/22 15:24:31'
-        }
-    ],
     options: [{
           value: '选项1',
           label: '按目标名称排序'
@@ -136,7 +123,8 @@ export default {
           value: '选项4',
           label: '按修改时间排序'
         }],
-        total : 10
+        total : 10,
+        Data: this.tableData,
       }
     },
     methods:{
@@ -148,10 +136,7 @@ export default {
             this.targetList(val);
         },
         async targetList(page) {
-            let res = await this.$api.targetList({ page })
-            console.log('输出', res, page);
-            this.tableData = res.data.data;
-            this.total = res.data.length;
+            this.Data = this.tableData[page];
         },
         TargetDetail(index, row){
           console.log(index, row);
