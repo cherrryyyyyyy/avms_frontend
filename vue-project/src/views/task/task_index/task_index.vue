@@ -2,7 +2,7 @@
     <div>
         <div class="header">
             <h3>
-                目标（{{total}}个）
+                任务({{total}}个)
             </h3>
         </div>
     
@@ -10,8 +10,8 @@
             <el-container>
                 <el-header>
                     <el-row>
-                        <el-button type="primary" @click="CreateNewTarget" class="detailed">
-                            新增目标
+                        <el-button type="primary" @click="CreateNewTask" class="detailed">
+                            新增任务
                         </el-button>
                         <el-select v-model="value" placeholder="排序">
                           <el-option
@@ -31,51 +31,84 @@
                           border
                           style="width: 100%">
                           <el-table-column
-                            prop="target_name"
-                            label="目标名称"
-                            width="180"
+                            prop="task_name"
+                            label="任务名称"
+                            width="150"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="target_describe"
-                            label="目标描述"
-                            width="380"
+                            prop="task_describe"
+                            label="任务描述"
+                            width="250"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="target_range"
-                            label="主机范围"
-                            width="180"
+                            prop="task_target"
+                            label="任务目标"
+                            width="120"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="port_range"
-                            label="端口范围"
-                            width="180"
+                            prop="active_scanning_Methods"
+                            label="活跃扫描方法"
+                            width="110"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="create_date"
+                            prop="task_type"
+                            label="任务类型"
+                            width="80"
+                            align="center"
+                            show-overflow-tooltip="true">
+                          </el-table-column>
+                          <el-table-column
+                            prop="scheduling_time"
+                            label="调度时间"
+                            width="120"
+                            align="center"
+                            show-overflow-tooltip="true">
+                          </el-table-column>
+                          <el-table-column
+                            prop="create_time"
                             label="创建时间"
-                            width="180"
-                            align="center">
+                            width="120"
+                            align="center"
+                            show-overflow-tooltip="true">
                         </el-table-column>
                         <el-table-column
-                            prop="last_change_date"
+                            prop="last_change_time"
                             label="最近修改时间"
-                            width="180"
-                            align="center">
+                            width="120"
+                            align="center"
+                            show-overflow-tooltip="true">
+                        </el-table-column>
+                        <el-table-column
+                            prop="task_status"
+                            label="任务状态"
+                            width="120"
+                            align="center"
+                            show-overflow-tooltip="true">
+                        </el-table-column>
+                        <el-table-column
+                            prop="task_progress"
+                            label="任务进度"
+                            width="120"
+                            align="center"
+                            show-overflow-tooltip="true">
+                            <template slot-scope="scope">
+                            <el-progress :text-inside="true" :stroke-width="26" :percentage="scope.row.task_progress"></el-progress>
+                            </template>
                         </el-table-column>
                         <el-table-column label="操作" align="center">
                             <!--使用template拿取整行的数据 scope.$index 当前行索引号， scope.row 当前行内容-->
                             <template slot-scope="scope">
                                 <!--编辑功能待实现-->
                                 <el-button type="primary" size="mini" icon="el-icon-edit"
-                                    @click="TargetDetail(scope.$index, scope.row)">详情</el-button>
+                                    @click="TaskDetail(scope.$index, scope.row)">详情</el-button>
 
                                 <el-button type="primary" size="mini" icon="el-icon-edit"
                                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -90,17 +123,18 @@
                     
                 </el-main>
               </el-container>
-              <div class="pagination">
+
+            <div class="pagination">
                 <Pagination :total="total" @CurrentChange="CurrentChange"></Pagination>
             </div>
         </div>
     </div>
-</template>
-  
-<script>
-import Pagination from '@/component/pagination/page-tabs.vue'
-export default {
-    components: {
+    </template>
+      
+    <script>
+    import Pagination from '@/component/pagination/page-tabs.vue'
+    export default {
+        components: {
         Pagination
     },
     props: {
@@ -113,10 +147,10 @@ export default {
       return {
     options: [{
           value: '选项1',
-          label: '按目标名称排序'
+          label: '按任务名称排序'
         }, {
           value: '选项2',
-          label: '按主机范围排序'
+          label: '按调度时间排序'
         }, {
           value: '选项3',
           label: '按创建时间排序'
@@ -126,47 +160,45 @@ export default {
         }],
         total : 20,
         Data: this.tableData,
-      }
+      }  
     },
     methods:{
-        CreateNewTarget(){
-            this.$router.push('/target/addtarget')
+        CreateNewTask(){
+            this.$router.push('/task/addtask')
         },
         CurrentChange(val) {
             console.log('頁嗎', val);
-            this.targetList(val);
+            this.taskList(val);
         },
-        async targetList(page) {
+        async taskList(page) {
             this.Data = this.tableData.slice((page-1)*10,page*10);
             console.log(page);
         },
-        TargetDetail(index, row){
+        TaskDetail(index, row){
           console.log(index, row);
-          this.showdetail(row.target_id)
+          this.showdetail(row.task_id)
         },
         showdetail(val){
           this.$router.push(
-            { path:'/target/targetdetail', 
-            query:{ target_id : val} 
+            { path:'/task/taskdetail', 
+            query:{ task_id : val} 
           })
         }
     },
     created() {
-        this.targetList(1);
+        this.taskList(1);
         this.total = this.tableData.length;
     }
-}
-</script>
-
-<style lang="less" scoped>
-.header{
-    height:55px;
-    background: #fff;
-    border-bottom: 2px solid black;
-
-
-}
-.wrapper{
-  padding: 10px;
-}
-</style>
+    }
+    </script>
+    
+    <style lang="less" scoped>
+    .header{
+        height:55px;
+        background: #fff;
+        border-bottom: 2px solid black;
+    }
+    .wrapper{
+      padding: 10px;
+    }
+    </style>

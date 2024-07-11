@@ -46,7 +46,7 @@
         <i class="el-icon-aim"></i>
         <span slot="title">目标</span>
       </el-menu-item>
-      <el-menu-item index="/task">
+      <el-menu-item index="/task/index">
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>

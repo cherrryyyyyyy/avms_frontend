@@ -1,25 +1,26 @@
 <template>
     <div>
         <!--
-            使用router-view使界面跳转到/elements路由下
+            使用router-view使界面跳转到路由下
         -->
         <router-view :tableData="tableData" @Inserttotarget="Insert2target"></router-view>
     </div>
 </template>
       
-<script>     
+<script>  
 export default {
   data(){
     return{
       tableData: '',
       form : {},
+      time : '',
     },
     this.tableData = [{
           target_id: 1,
           target_name: '用于测试的目标',
-          target_describe: '用于测试的目标的描述123123123122313长长长长长长长长长长长长长长长长',
+          target_describe: '用于测试的目标的描述123123123122313长长长长长长长长长长长长长长长长描述123123123122313长长长长长长长长长长长长长长长长描述123123123122313长长长长长长长长长长长长长长长长',
           port_range: 'Nmap tcp top10',
-          target_range: '192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26',
+          target_range: '192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26,192.168.0.0/26',
           create_date: '2024/07/21 15:23:34',
           last_change_date: '2024/07/21 15:23:34'
         },
@@ -214,6 +215,25 @@ export default {
     ]
   },
   methods: {
+    Gettime(){
+        let _this = this;
+        let year = new Date().getFullYear(); //获取当前时间的年份
+        let month = new Date().getMonth() + 1; //获取当前时间的月份
+        let day = new Date().getDate(); //获取当前时间的天数
+        let hours = new Date().getHours(); //获取当前时间的小时
+        let minutes = new Date().getMinutes(); //获取当前时间的分数
+        let seconds = new Date().getSeconds(); //获取当前时间的秒数
+        if (hours < 10) {
+        hours = "0" + hours;
+        }
+        if (minutes < 10) {
+        minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+        seconds = "0" + seconds;
+        }
+        _this.time = year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds;
+    },
     Insert2target(formName)
     {
         this.form = {
@@ -225,17 +245,22 @@ export default {
           create_date: '',
           last_change_date: ''
         }
-        this.form.target_id = Math.floor(Math.random()*10);
+        this.form.target_id = this.tableData.length + 1;
         this.form.target_name = formName.name;
         this.form.target_describe = formName.desc;
         this.form.port_range = formName.port_range;
         this.form.target_range = formName.range;
-        //this.form.createdate = new Date();
-        //this.form.last_change_date = new Date();
+        this.Gettime();
+        this.form.create_date = this.time;
+        this.form.last_change_date = this.time;
         this.tableData.push(this.form);
         alert('submit!');
+    },
+    
+  },
+  created() {
+        this.$store.commit('saveTargetData',this.tableData);
     }
-  }
   
 }
 </script>

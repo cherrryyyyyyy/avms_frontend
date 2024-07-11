@@ -17,6 +17,9 @@ const api ={
     targetList(params){
         return axios.get(base.targetList,{params})
     },
+    GetTargetList(){
+        return axios.get(base.GetTargetList)
+    }
 };
 
 export default api

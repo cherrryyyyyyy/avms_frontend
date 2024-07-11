@@ -30,7 +30,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">创建</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm',ruleForm)">创建</el-button>
               <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
           </el-form> 
@@ -64,18 +64,18 @@ export default {
           ]
         },
         form : {},
-      };
+      }
     },
 
     methods:{
         Goback(){
             this.$router.push('/target/index')
         },
-        submitForm(formName){
-          console.log(this.$refs[formName])
+        submitForm(formName,ruleForm){
+          console.log(ruleForm.date1);
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$emit('Inserttotarget',formName);
+            this.$emit('Inserttotarget',ruleForm);
             alert('submit!');
           } else {
             console.log('error submit!!');
