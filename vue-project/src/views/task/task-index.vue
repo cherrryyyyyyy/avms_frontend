@@ -219,7 +219,11 @@ export default {
             this.tableData.push(this.form);
             alert('submit!');
     },
+    },
+  created() {
+        this.$store.commit('saveTaskData',this.tableData);
     }
+
 }
 </script>
 

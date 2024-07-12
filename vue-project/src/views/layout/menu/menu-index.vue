@@ -50,7 +50,7 @@
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
-      <el-menu-item index="/result">
+      <el-menu-item index="/result/index">
         <i class="el-icon-document"></i>
         <span slot="title">结果</span>
       </el-menu-item>

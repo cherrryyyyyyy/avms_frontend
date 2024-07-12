@@ -9,11 +9,11 @@
         <div class="wrapper">
             <el-container>
                 <el-header>
-                    <el-row>
+                    <el-row  style="text-align: right">
                         <el-button type="primary" @click="CreateNewTarget" class="detailed">
                             新增目标
                         </el-button>
-                        <el-select v-model="value" placeholder="排序">
+                        <el-select v-model="value" placeholder="排序" style="padding : 20px">
                           <el-option
                             v-for="item in options"
                             :key="item.value"

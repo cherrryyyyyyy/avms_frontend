@@ -15,6 +15,9 @@ import Target_Detail from '@/views/target/target_detail/target-detail.vue'
 import Task_Detail from '@/views/task/task_detail/task_detail.vue'
 import Task_index from '@/views/task/task_index/task_index.vue'
 import Add_task from '@/views/task/task_add/task_add.vue'
+import Result_index from "@/views/result/result_index/result_index.vue"
+import Result_Detail from "@/views/result/result_detail/result_detail.vue"
+import Hosts_Detail from "@/views/result/hosts_detail/hosts_detail.vue"
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -95,6 +98,23 @@ const routes=[
             path:'/result',
             name:'result',
             component: Result,
+            children:[
+                {
+                    path:'index',
+                    name: Result_index,
+                    component: Result_index
+                },
+                {
+                    path:'resultdetail',
+                    name: Result_Detail,
+                    component: Result_Detail
+                },
+                {
+                    path:'hostsdetail',
+                    name: Hosts_Detail,
+                    component: Hosts_Detail
+                }
+            ]
         },
         {
             path:'/manage',

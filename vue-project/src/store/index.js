@@ -10,6 +10,7 @@ export default new Vuex.Store({
         currJobData: {},
         DbSource: [],
         TargetData: [],
+        TaskData: [],
     },
     mutations:{
         // 保存当前菜单栏的路径
@@ -31,6 +32,10 @@ export default new Vuex.Store({
         // 保存目标数据
         saveTargetData(state,TargetData){
             state.TargetData = TargetData;
+        },
+        // 保存任务数据
+        saveTaskData(state,TaskData){
+            state.TaskData = TaskData;
         }
     }
 })
