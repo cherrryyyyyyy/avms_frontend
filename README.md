@@ -1,28 +1,26 @@
-# vue_flask_project
+# avms_frontend
 
 #### 介绍
-vue-flask前后端项目
+avms前端页面项目
 
 #### 软件架构
 vue负责实现前端界面
-server文件夹中使用node.js与flask，基于SQlite3数据库实现后端接口。
+server文件夹中使用node.js与flask，基于SQlite3数据库实现后端接口。（待定）
 
 
 #### 安装教程
 
-1.  vue add element
-2.  npm i axios -S
-3.  npm i queryString
-4.  npm i normalize.css -S
-5.  npm i echarts -S
+npm install 安装
+npm run serve 开启服务
 
 #### 已完成
 1.  搭建主页框架
 2.  完成vue项目build实验
+3.  完成整体页面结构编写和api设置
 
 #### todolist
 
-1.  确定网页整体架构
-2.  flask后端接口实现
-3.  确认需求完善网页布局和内容
+1.  设置api对数据库操作功能
+2.  首页仪表盘编写
+3.  整体页面美化
 
