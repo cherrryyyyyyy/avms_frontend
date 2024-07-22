@@ -12,9 +12,9 @@ module.exports = defineConfig({
         //changeOrigin: true 将请求的头部的Host字段改为被代理服务器的Host字段
         changeOrigin: true,
         //pathRewrite将"^/api"重写为''，使得在定义api路由时可以不用重复写/api前缀
-        pathRewrite:{
-          "^/api":''
-        }
+        //pathRewrite:{
+        //  "^/api":''
+        //}
       }
     }
   }

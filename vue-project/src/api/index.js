@@ -19,7 +19,17 @@ const api ={
     },
     GetTargetList(){
         return axios.get(base.GetTargetList)
-    }
+    },
+    GetPorts(){
+        return axios.get(base.GetPorts)
+    },
+    GetAliveMethods(){
+        return axios.get(base.GetAliveMethods)
+    },
+    CreateTarget(params){
+        return axios.get(base.CreateTarget,{params})
+    },
+    
 };
 
 export default api
