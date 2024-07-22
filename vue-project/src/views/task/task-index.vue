@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view :tableData="tableData" @Inserttotarget="Insert2target"></router-view>
+        <router-view :tableData="tableData" @Inserttotarget="Insert2target" @ChangeTarget="ChangeTarget"></router-view>
     </div>
 </template>
   
@@ -219,6 +219,18 @@ export default {
             this.tableData.push(this.form);
             alert('submit!');
     },
+    ChangeTarget(formName){
+        console.log(formName.task_id);
+        this.tableData[formName.task_id-1].task_name = formName.task_name;
+        this.tableData[formName.task_id-1].task_describe = formName.task_describe;
+        this.tableData[formName.task_id-1].task_target = formName.task_target;
+        this.tableData[formName.task_id-1].active_scanning_Methods = formName.active_scanning_Methods;
+        this.tableData[formName.task_id-1].task_type = formName.task_type;
+        this.tableData[formName.task_id-1].scheduling_time = formName.date1 +' '+ formName.date2;
+        this.Gettime();
+        this.tableData[formName.task_id-1].last_change_time = this.time;
+        alert('change!');
+    }
     },
   created() {
         this.$store.commit('saveTaskData',this.tableData);

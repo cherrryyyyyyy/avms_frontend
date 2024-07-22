@@ -35,7 +35,7 @@
                 <el-form-item label="类型" prop="class">
                     <el-select v-model="ruleForm.class" placeholder="请选择类型">
                       <el-option label="按需" value="按需"></el-option>
-                      <el-option label="调度" value="按需"></el-option>
+                      <el-option label="调度" value="调度"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="调度时间" required>
@@ -118,6 +118,7 @@
             return false;
           }
         });
+        this.Goback();
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

@@ -113,7 +113,7 @@
                                     @click="TaskDetail(scope.$index, scope.row)">详情</el-button>
 
                                 <el-button type="primary" size="mini" icon="el-icon-edit"
-                                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                    @click="TaskChange(scope.$index, scope.row)">编辑</el-button>
         
                                 <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
                                     @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -183,6 +183,16 @@
         showdetail(val){
           this.$router.push(
             { path:'/task/taskdetail', 
+            query:{ task_id : val} 
+          })
+        },
+        TaskChange(index, row){
+          console.log(index, row);
+          this.showchange(row.task_id)
+        },
+        showchange(val){
+          this.$router.push(
+            { path:'/task/taskchange', 
             query:{ task_id : val} 
           })
         }
