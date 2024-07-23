@@ -16,7 +16,7 @@
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">名称</span>
                     <div class="fontClass">
-                    {{Data[$route.query.target_id-1].target_name}}
+                    {{Data[$route.query.index].name}}
                     </div>
                 </el-descriptions-item>
                 <el-descriptions-item>
@@ -29,42 +29,42 @@
                 <el-descriptions-item :contentStyle="{'width' : '1000px'}">
                     <span slot="label" class="fontClass">描述</span>
                     <div class="fontClass">
-                    {{Data[$route.query.target_id-1].target_describe}}
+                    {{Data[$route.query.index].description}}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">创建时间</span>
                     <div class="fontClass">
-                    {{Data[$route.query.target_id-1].create_date}}
+                    {{Data[$route.query.index].create_time}}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标范围</span>
                     <div class="fontClass">
-                    {{Data[$route.query.target_id-1].target_range}}
+                    {{Data[$route.query.index].hosts}}
                     </div>
                 </el-descriptions-item>
                 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">上次修改时间</span>
                     <div class="fontClass">
-                    {{Data[$route.query.target_id-1].last_change_date}}
+                    {{Data[$route.query.index].last_modify_time}}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标数量</span>
                     <div class="fontClass">
-                    
+                        {{Data[$route.query.index].hosts_total}}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">端口范围</span>
                     <div class="fontClass">
-                        {{Data[$route.query.target_id-1].port_range}}
+                        {{Data[$route.query.index].port_list}}
                     </div>
                 </el-descriptions-item>
 

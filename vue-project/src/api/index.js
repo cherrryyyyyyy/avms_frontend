@@ -17,8 +17,8 @@ const api ={
     targetList(params){
         return axios.get(base.targetList,{params})
     },
-    GetTargetList(){
-        return axios.get(base.GetTargetList)
+    GetTarget(){
+        return axios.get(base.GetTarget)
     },
     GetPorts(){
         return axios.get(base.GetPorts)
@@ -29,7 +29,10 @@ const api ={
     CreateTarget(params){
         return axios.get(base.CreateTarget,{params})
     },
-    
+    DeleteTarget(params){
+        return axios.get(base.DeleteTarget,{params})
+    }
+
 };
 
 export default api

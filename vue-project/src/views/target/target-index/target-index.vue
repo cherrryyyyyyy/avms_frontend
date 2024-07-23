@@ -31,43 +31,43 @@
                           border
                           style="width: 100%">
                           <el-table-column
-                            prop="target_name"
+                            prop="name"
                             label="目标名称"
-                            width="180"
+                            width="150"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="target_describe"
+                            prop="description"
                             label="目标描述"
-                            width="380"
+                            width="270"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="target_range"
+                            prop="hosts"
                             label="主机范围"
-                            width="180"
+                            width="250"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="port_range"
+                            prop="port_list"
                             label="端口范围"
-                            width="180"
+                            width="160"
                             align="center"
                             show-overflow-tooltip="true">
                           </el-table-column>
                           <el-table-column
-                            prop="create_date"
+                            prop="create_time"
                             label="创建时间"
-                            width="180"
+                            width="250"
                             align="center">
                         </el-table-column>
                         <el-table-column
-                            prop="last_change_date"
+                            prop="last_modify_time"
                             label="最近修改时间"
-                            width="180"
+                            width="250"
                             align="center">
                         </el-table-column>
                         <el-table-column label="操作" align="center">
@@ -81,7 +81,7 @@
                                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         
                                 <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
-                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                                    @click="TargetDelete(scope.$index, scope.row)">删除</el-button>
         
                             </template>
                         </el-table-column>
@@ -125,7 +125,6 @@ export default {
           label: '按修改时间排序'
         }],
         total : 20,
-        Data: this.tableData,
       }
     },
     methods:{
@@ -137,23 +136,60 @@ export default {
             this.targetList(val);
         },
         async targetList(page) {
-            this.Data = this.tableData.slice((page-1)*10,page*10);
-            console.log(page);
+            let res = await this.$api.GetTarget();
+            this.Data = res.data.data.slice((page-1)*10,page*10);
+            console.log('侧石',this.Data,page,res);
+            this.total = res.data.data.length;
         },
         TargetDetail(index, row){
           console.log(index, row);
-          this.showdetail(row.target_id)
+          this.showdetail(index)
+        },
+        TargetDelete(index, row){
+          console.log(index, row);
+          console.log(row.name);
+          this.$confirm('确定删除当前目标?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                //调用deleteElements函数
+                this.deleteTarget(row.name);
+                
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+          
+        },
+        async deleteTarget(name){
+          let res = await this.$api.DeleteTarget({name});
+          console.log('删除--------',res.data);
+            if (res.data.status == 200){
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }
+            //刷新界面
+            this.targetList(1);
         },
         showdetail(val){
           this.$router.push(
             { path:'/target/targetdetail', 
-            query:{ target_id : val} 
+            query:{ index : val} 
           })
         }
-    },
-    created() {
+      },
+      created() {
         this.targetList(1);
+        console.log('what???');
         this.total = this.tableData.length;
+    },
+      defineExpose(){
+        this.targetList()
     }
 }
 </script>

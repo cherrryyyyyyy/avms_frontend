@@ -6,10 +6,11 @@ const base ={
     search:"/api/elements/search",
     deleteElements:"/api/elements/deleteElements",
     targetList:"/api/target/targetList",
-    GetTargetList:"/api/task/gettargetlist",
+    GetTarget:"/api/get_targets",
     GetPorts:"/api/get_port_lists",
     GetAliveMethods:"/api/get_alive_scan_methods",
     CreateTarget:"/api/create_target",
+    DeleteTarget:"/api/delete_target",
     
 }
 

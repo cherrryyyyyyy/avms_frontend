@@ -20,12 +20,12 @@
             <el-form-item label="组件描述" prop="desc">
                 <el-input type="textarea" v-model="ruleForm.desc"></el-input>
             </el-form-item>
-            <el-form-item label="主机范围" prop="range">
-                <el-input type="textarea" v-model="ruleForm.range"></el-input>
+            <el-form-item label="主机范围" prop="hosts">
+                <el-input type="textarea" v-model="ruleForm.hosts"></el-input>
             </el-form-item>
-            <el-form-item label="端口范围" prop="port_range">
-              <el-select v-model="ruleForm.port_range" placeholder="请选择端口范围">
-                <el-option label="Nmap默认端口列表" value="Nmap_default"></el-option>
+            <el-form-item label="端口范围" prop="port_list">
+              <el-select v-model="ruleForm.port_list" placeholder="请选择端口范围">
+                <el-option label="Nmap默认端口列表" value="Nmap tcp top10"></el-option>
                 <el-option label="Nmap默认端口列表1" value="Nmap_default1"></el-option>
               </el-select>
             </el-form-item>
@@ -45,18 +45,18 @@ export default {
       return {
         ruleForm: {
           name: '',
-          port_range: '',
-          range: '',
+          port_list: '',
+          hosts: '',
           desc: ''
         },
         rules: {
           name: [
             { required: true, message: '请输入组件名称', trigger: 'blur' }
           ],
-          port_range: [
+          port_list: [
             { required: true, message: '请选择端口范围', trigger: 'change' }
           ],
-          range:[
+          hosts:[
             {required: true, message: '请填写主机范围', trigger: 'blur'}
           ],
           desc: [
@@ -82,24 +82,10 @@ export default {
             return false;
           }
         });
+        this.Goback();
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      },
-      async Insert2target(formName){
-        //let res = await this.$api.Insert2target(this.$refs[formName].$data);
-        this.form.target_id = Math.floor(Math.random()*10);
-        this.form.target_name = formName.name;
-        this.form.target_describe = formName.desc;
-        this.form.port_range = formName.port_range;
-        this.form.target_range = formName.range;
-        this.form.createdate = new Date();
-        this.form.last_change_date = new Date();
-        this.$message({
-                    type: 'info',
-                    message: '已成功添加'
-                });
-                //console.log('输出', res);
       }
     }
 }
