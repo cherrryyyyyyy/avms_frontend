@@ -27,7 +27,11 @@ const api ={
         return axios.get(base.GetAliveMethods)
     },
     CreateTarget(params){
-        return axios.get(base.CreateTarget,{params})
+        return axios({
+            url: base.CreateTarget,
+            method: 'post',
+            data: params
+        })
     },
     DeleteTarget(params){
         return axios.get(base.DeleteTarget,{params})

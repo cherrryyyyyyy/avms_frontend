@@ -80,6 +80,11 @@ export default {
     {
         Goback(){
             this.$router.push('/target/index')
+        },
+        async gettarget(){
+            let res = await this.$api.GetTarget();
+            console.log(res);
+            this.Data = res.data.data;
         }
     },
     props: {
@@ -92,6 +97,9 @@ export default {
         return{
             Data: this.tableData,
         }
+    },
+    created(){
+        this.gettarget();
     }
 }
 </script>

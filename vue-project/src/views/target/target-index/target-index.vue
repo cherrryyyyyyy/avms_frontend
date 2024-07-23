@@ -125,6 +125,7 @@ export default {
           label: '按修改时间排序'
         }],
         total : 20,
+        Data : [],
       }
     },
     methods:{
@@ -187,9 +188,6 @@ export default {
         this.targetList(1);
         console.log('what???');
         this.total = this.tableData.length;
-    },
-      defineExpose(){
-        this.targetList()
     }
 }
 </script>

@@ -14,6 +14,7 @@ export default {
       tableData: [],
       form : {},
       time : '',
+      fform : {}
     }
   },
   methods: {
@@ -42,7 +43,7 @@ export default {
           name: '',
           description: '',
           pl_name: '',
-          hosts: '',
+          hosts: [],
           create_time: '',
           last_modify_time: '',
           hosts_total: 0,
@@ -50,7 +51,9 @@ export default {
         this.form.name = formName.name;
         this.form.description = formName.desc;
         this.form.pl_name = formName.port_list;
-        this.form.hosts = formName.hosts;
+        for (let host of formName.hosts){
+          this.form.hosts.push(host.value);
+        }
         this.Gettime();
         this.form.create_time = this.time;
         this.form.last_modify_time = this.time;
