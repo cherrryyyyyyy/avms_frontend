@@ -19,6 +19,7 @@ import Result_index from "@/views/result/result_index/result_index.vue"
 import Result_Detail from "@/views/result/result_detail/result_detail.vue"
 import Hosts_Detail from "@/views/result/hosts_detail/hosts_detail.vue"
 import Task_Change from "@/views/task/task_change/task_change.vue"
+import Target_edit from "@/views/target/target_edit/target_edit.vue"
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -70,6 +71,11 @@ const routes=[
                     path:'targetdetail',
                     name: Target_Detail,
                     component: Target_Detail
+                },
+                {
+                    path:'targetedit',
+                    name: Target_edit,
+                    component: Target_edit
                 }
             ]
         },

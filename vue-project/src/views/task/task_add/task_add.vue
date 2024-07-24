@@ -125,12 +125,13 @@
         //console.log(this.ddata[0].target_name);
         console.log(this.options);
       },
-      getoptions(){
-        this.ddata = this.$store.state.TargetData;
+      async getoptions(){
+        let res = await this.$api.GetTarget();
+        this.ddata = res.data.data;
         console.log(this.$store.state.TargetData);
         this.ddata.forEach(
             data => {
-                this.options.push({lable: data.target_name,value: data.target_name});
+                this.options.push({lable: data.name,value: data.name});
             }
         );
       },

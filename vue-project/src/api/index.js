@@ -35,6 +35,13 @@ const api ={
     },
     DeleteTarget(params){
         return axios.get(base.DeleteTarget,{params})
+    },
+    UpdateTarget(params){
+        return axios({
+            url: base.UpdateTarget,
+            method: 'post',
+            data: params
+        })
     }
 
 };

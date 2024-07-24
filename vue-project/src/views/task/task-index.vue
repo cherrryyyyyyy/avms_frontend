@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view :tableData="tableData" @Inserttotarget="Insert2target" @ChangeTarget="ChangeTarget"></router-view>
+        <router-view :tableData="tableData" @Inserttotarget="Insert2target" @ChangeTask="ChangeTask"></router-view>
     </div>
 </template>
   
@@ -219,7 +219,7 @@ export default {
             this.tableData.push(this.form);
             alert('submit!');
     },
-    ChangeTarget(formName){
+    ChangeTask(formName){
         console.log(formName.task_id);
         this.tableData[formName.task_id-1].task_name = formName.task_name;
         this.tableData[formName.task_id-1].task_describe = formName.task_describe;

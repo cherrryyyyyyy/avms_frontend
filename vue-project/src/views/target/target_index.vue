@@ -3,7 +3,7 @@
         <!--
             使用router-view使界面跳转到路由下
         -->
-        <router-view :tableData="tableData" @Inserttotarget="Insert2target" @get_target="get_target"></router-view>
+        <router-view :tableData="tableData" @Inserttotarget="Insert2target" @get_target="get_target" @targetedit="target_edit"></router-view>
     </div>
 </template>
       
@@ -76,6 +76,20 @@ export default {
         console.log('输出????', res);
         this.tableData = res.data.data;
         console.log(this.tableData);
+    },
+    target_edit(formName){
+      this.edit2api(formName);
+    },
+    async edit2api(form){
+      let res = await this.$api.UpdateTarget(form);
+      console.log('修改',form);
+      if (res.data.status == 200){
+          this.$message({
+                    type: 'success',
+                    message: '添加成功!'
+                });
+                
+        }
     }
   },
   created(){

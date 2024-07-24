@@ -78,7 +78,7 @@
                                     @click="TargetDetail(scope.$index, scope.row)">详情</el-button>
 
                                 <el-button type="primary" size="mini" icon="el-icon-edit"
-                                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                    @click="TargetEdit(scope.$index, scope.row)">编辑</el-button>
         
                                 <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
                                     @click="TargetDelete(scope.$index, scope.row)">删除</el-button>
@@ -126,6 +126,7 @@ export default {
         }],
         total : 20,
         Data : [],
+        page : 1,
       }
     },
     methods:{
@@ -135,6 +136,7 @@ export default {
         CurrentChange(val) {
             console.log('頁嗎', val);
             this.targetList(val);
+            this.page = val;
         },
         async targetList(page) {
             let res = await this.$api.GetTarget();
@@ -144,6 +146,7 @@ export default {
         },
         TargetDetail(index, row){
           console.log(index, row);
+          index += (this.page-1)*10;
           this.showdetail(index)
         },
         TargetDelete(index, row){
@@ -164,6 +167,17 @@ export default {
                 });
             });
           
+        },
+        TargetEdit(index, row){
+          console.log(index, row);
+          index += (this.page-1)*10;
+          this.showedit(index)
+        },
+        showedit(val){
+          this.$router.push(
+            { path:'/target/targetedit', 
+            query:{ index : val} 
+          })
         },
         async deleteTarget(name){
           let res = await this.$api.DeleteTarget({name});

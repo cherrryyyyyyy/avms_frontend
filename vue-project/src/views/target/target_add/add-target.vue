@@ -21,9 +21,7 @@
         <el-form-item label="组件描述" prop="desc">
           <el-input type="textarea" v-model="ruleForm.desc"></el-input>
         </el-form-item>
-        <el-form-item v-for="(host, index) in ruleForm.hosts" 
-          :label="'主机' + index" 
-          :key="host.key"
+        <el-form-item v-for="(host, index) in ruleForm.hosts" :label="'主机' + index" :key="host.key"
           :prop="'hosts.' + index + '.value'" :rules="{
             required: true, message: '域名不能为空', trigger: 'blur'
           }">
@@ -31,12 +29,12 @@
           </el-input><el-button @click.prevent="removeHost(host)">删除</el-button>
         </el-form-item>
         <el-form-item>
-        <el-button @click="addHost">新增域名</el-button>
-      </el-form-item>
+          <el-button @click="addHost">新增域名</el-button>
+        </el-form-item>
         <el-form-item label="端口范围" prop="port_list">
           <el-select v-model="ruleForm.port_list" placeholder="请选择端口范围">
-            <el-option label="Nmap默认端口列表" value="Nmap tcp top10"></el-option>
-            <el-option label="Nmap默认端口列表1" value="Nmap_default1"></el-option>
+            <el-option v-for="option in options" :key="option.value" :label="option.lable" :value="option.value">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -59,8 +57,10 @@ export default {
         hosts: [{
           value: ''
         }],
-        desc: ''
+        desc: '',
       },
+      ddata: [],
+      options: [],
       rules: {
         name: [
           { required: true, message: '请输入组件名称', trigger: 'blur' }
@@ -81,18 +81,18 @@ export default {
 
   methods: {
     removeHost(item) {
-        var index = this.ruleForm.hosts.indexOf(item)
-        if (index !== -1) {
-          this.ruleForm.hosts.splice(index, 1)
-        }
-      },
-      addHost() {
-        console.log(Date.now());  
-        this.ruleForm.hosts.push({
-          value: '',
-          key: Date.now()
-        });
-      },
+      var index = this.ruleForm.hosts.indexOf(item)
+      if (index !== -1) {
+        this.ruleForm.hosts.splice(index, 1)
+      }
+    },
+    addHost() {
+      console.log(Date.now());
+      this.ruleForm.hosts.push({
+        value: '',
+        key: Date.now()
+      });
+    },
     Goback() {
       this.$router.push('/target/index')
     },
@@ -111,7 +111,20 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    async getoptions() {
+      let res = await this.$api.GetPorts();
+      this.ddata = res.data.data;
+      console.log(this.$store.state.TargetData);
+      this.ddata.forEach(
+        data => {
+          this.options.push({ lable: data.name, value: data.name });
+        }
+      );
     }
+  },
+  created() {
+    this.getoptions();
   }
 }
 </script>

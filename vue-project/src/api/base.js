@@ -11,7 +11,7 @@ const base ={
     GetAliveMethods:"/api/get_alive_scan_methods",
     CreateTarget:"/api/create_target",
     DeleteTarget:"/api/delete_target",
-    
+    UpdateTarget:"/api/update_target",
 }
 
 export default base
