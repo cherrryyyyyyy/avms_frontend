@@ -1,20 +1,17 @@
 <template>
-<div>
-    <!--
+    <div>
+        <!--
         使用router-view使界面跳转到/elements路由下
     -->
-    <router-view></router-view>
-</div>
+        <router-view></router-view>
+    </div>
 </template>
-  
+
 <script>
-  
+
 export default {
-    
+
 }
 </script>
 
-<style>
-
-
-</style>
+<style></style>

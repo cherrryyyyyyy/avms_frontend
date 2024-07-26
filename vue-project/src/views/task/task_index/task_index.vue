@@ -1,216 +1,168 @@
 <template>
-    <div>
-        <div class="header">
-            <h3>
-                任务({{total}}个)
-            </h3>
-        </div>
-    
-        <div class="wrapper">
-            <el-container>
-                <el-header>
-                    <el-row style="text-align: right">
-                        <el-button type="primary" @click="CreateNewTask" class="detailed">
-                            新增任务
-                        </el-button>
-                        <el-select v-model="value" placeholder="排序" style="padding : 20px">
-                          <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                        </el-select>
-                    </el-row>
-                </el-header>
-                <el-main>
-                    <template>
-                        <el-table stripe=true
-                          :data="Data"
-                          height=590
-                          border
-                          style="width: 100%">
-                          <el-table-column
-                            prop="task_name"
-                            label="任务名称"
-                            width="150"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="task_describe"
-                            label="任务描述"
-                            width="250"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="task_target"
-                            label="任务目标"
-                            width="120"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="active_scanning_Methods"
-                            label="活跃扫描方法"
-                            width="110"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="task_type"
-                            label="任务类型"
-                            width="80"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="scheduling_time"
-                            label="调度时间"
-                            width="120"
-                            align="center"
-                            show-overflow-tooltip="true">
-                          </el-table-column>
-                          <el-table-column
-                            prop="create_time"
-                            label="创建时间"
-                            width="120"
-                            align="center"
-                            show-overflow-tooltip="true">
-                        </el-table-column>
-                        <el-table-column
-                            prop="last_change_time"
-                            label="最近修改时间"
-                            width="120"
-                            align="center"
-                            show-overflow-tooltip="true">
-                        </el-table-column>
-                        <el-table-column
-                            prop="task_status"
-                            label="任务状态"
-                            width="120"
-                            align="center"
-                            show-overflow-tooltip="true">
-                        </el-table-column>
-                        <el-table-column
-                            prop="task_progress"
-                            label="任务进度"
-                            width="100"
-                            align="center"
-                            show-overflow-tooltip="true">
-                            <template slot-scope="scope">
-                            <el-progress :text-inside="true" :stroke-width="26" :percentage="scope.row.task_progress"></el-progress>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作" align="center">
-                            <!--使用template拿取整行的数据 scope.$index 当前行索引号， scope.row 当前行内容-->
-                            <template slot-scope="scope">
-                                <!--编辑功能待实现-->
-                                <el-button type="primary" size="mini" icon="el-icon-circle-check"
-                                    @click="TaskStart(scope.$index, scope.row)">启动</el-button>
-                                <el-button type="primary" size="mini" icon="el-icon-edit"
-                                    @click="TaskDetail(scope.$index, scope.row)">详情</el-button>
-
-                                <el-button type="primary" size="mini" icon="el-icon-edit"
-                                    @click="TaskChange(scope.$index, scope.row)">编辑</el-button>
-        
-                                <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
-                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        
-                            </template>
-                        </el-table-column>
-                        </el-table>
-                      </template>
-                    
-                </el-main>
-              </el-container>
-
-            <div class="pagination">
-                <Pagination :total="total" @CurrentChange="CurrentChange"></Pagination>
-            </div>
-        </div>
+  <div>
+    <div class="header">
+      <h3>
+        任务({{ total }}个)
+      </h3>
     </div>
-    </template>
-      
-    <script>
-    import Pagination from '@/component/pagination/page-tabs.vue'
-    export default {
-        components: {
-        Pagination
-    },
-    props: {
-      tableData:{
-        type : Array,
-        default: ()=>[],
-      }
-    },
-    data() {
-      return {
-    options: [{
-          value: '选项1',
-          label: '按任务名称排序'
-        }, {
-          value: '选项2',
-          label: '按调度时间排序'
-        }, {
-          value: '选项3',
-          label: '按创建时间排序'
-        }, {
-          value: '选项4',
-          label: '按修改时间排序'
-        }],
-        total : 20,
-        Data: this.tableData,
-      }  
-    },
-    methods:{
-        CreateNewTask(){
-            this.$router.push('/task/addtask')
-        },
-        CurrentChange(val) {
-            console.log('頁嗎', val);
-            this.taskList(val);
-        },
-        async taskList(page) {
-            this.Data = this.tableData.slice((page-1)*10,page*10);
-            console.log(page);
-        },
-        TaskDetail(index, row){
-          console.log(index, row);
-          this.showdetail(row.task_id)
-        },
-        showdetail(val){
-          this.$router.push(
-            { path:'/task/taskdetail', 
-            query:{ task_id : val} 
-          })
-        },
-        TaskChange(index, row){
-          console.log(index, row);
-          this.showchange(row.task_id)
-        },
-        showchange(val){
-          this.$router.push(
-            { path:'/task/taskchange', 
-            query:{ task_id : val} 
-          })
-        }
-    },
-    created() {
-        this.taskList(1);
-        this.total = this.tableData.length;
+
+    <div class="wrapper">
+      <el-container>
+        <el-header>
+          <el-row style="text-align: right">
+            <el-button type="primary" @click="CreateNewTask" class="detailed">
+              新增任务
+            </el-button>
+            <el-select v-model="value" placeholder="排序" style="padding : 20px">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-row>
+        </el-header>
+        <el-main>
+          <template>
+            <el-table stripe=true :data="Data" height=590 border style="width: 100%">
+              <el-table-column prop="task_name" label="任务名称" width="150" align="center" show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="task_describe" label="任务描述" width="250" align="center"
+                show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="task_target" label="任务目标" width="120" align="center" show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="active_scanning_Methods" label="活跃扫描方法" width="110" align="center"
+                show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="task_type" label="任务类型" width="80" align="center" show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="scheduling_time" label="调度时间" width="120" align="center"
+                show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="create_time" label="创建时间" width="120" align="center" show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="last_change_time" label="最近修改时间" width="120" align="center"
+                show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="task_status" label="任务状态" width="120" align="center" show-overflow-tooltip="true">
+              </el-table-column>
+              <el-table-column prop="task_progress" label="任务进度" width="100" align="center"
+                show-overflow-tooltip="true">
+                <template slot-scope="scope">
+                  <el-progress :text-inside="true" :stroke-width="26"
+                    :percentage="scope.row.task_progress"></el-progress>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" align="center">
+                <!--使用template拿取整行的数据 scope.$index 当前行索引号， scope.row 当前行内容-->
+                <template slot-scope="scope">
+                  <!--编辑功能待实现-->
+                  <el-button type="primary" size="mini" icon="el-icon-circle-check"
+                    @click="TaskStart(scope.$index, scope.row)">启动</el-button>
+                  <el-button type="primary" size="mini" icon="el-icon-edit"
+                    @click="TaskDetail(scope.$index, scope.row)">详情</el-button>
+
+                  <el-button type="primary" size="mini" icon="el-icon-edit"
+                    @click="TaskChange(scope.$index, scope.row)">编辑</el-button>
+
+                  <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+
+        </el-main>
+      </el-container>
+
+      <div class="pagination">
+        <Pagination :total="total" @CurrentChange="CurrentChange"></Pagination>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Pagination from '@/component/pagination/page-tabs.vue'
+export default {
+  components: {
+    Pagination
+  },
+  props: {
+    tableData: {
+      type: Array,
+      default: () => [],
     }
+  },
+  data() {
+    return {
+      options: [{
+        value: '选项1',
+        label: '按任务名称排序'
+      }, {
+        value: '选项2',
+        label: '按调度时间排序'
+      }, {
+        value: '选项3',
+        label: '按创建时间排序'
+      }, {
+        value: '选项4',
+        label: '按修改时间排序'
+      }],
+      total: 20,
+      Data: this.tableData,
     }
-    </script>
-    
-    <style lang="less" scoped>
-    .header{
-        height:55px;
-        background: #fff;
-        border-bottom: 2px solid black;
+  },
+  methods: {
+    CreateNewTask() {
+      this.$router.push('/task/addtask')
+    },
+    CurrentChange(val) {
+      console.log('頁嗎', val);
+      this.taskList(val);
+    },
+    async taskList(page) {
+      this.Data = this.tableData.slice((page - 1) * 10, page * 10);
+      console.log(page);
+    },
+    TaskDetail(index, row) {
+      console.log(index, row);
+      this.showdetail(row.task_id)
+    },
+    showdetail(val) {
+      this.$router.push(
+        {
+          path: '/task/taskdetail',
+          query: { task_id: val }
+        })
+    },
+    TaskChange(index, row) {
+      console.log(index, row);
+      this.showchange(row.task_id)
+    },
+    showchange(val) {
+      this.$router.push(
+        {
+          path: '/task/taskchange',
+          query: { task_id: val }
+        })
     }
-    .wrapper{
-      padding: 10px;
-    }
-    </style>
+  },
+  created() {
+    this.taskList(1);
+    this.total = this.tableData.length;
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.header {
+  height: 55px;
+  background: #fff;
+  border-bottom: 2px solid black;
+}
+
+.wrapper {
+  padding: 10px;
+  width: auto;
+}
+</style>

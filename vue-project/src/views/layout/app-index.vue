@@ -58,7 +58,8 @@ export default {
 
   .content{
     padding-left:200px;
-    width:100%;
+    transition: padding-left 0.43s;
+    width:89%;
   }
   .small{
     padding-left: 64px;

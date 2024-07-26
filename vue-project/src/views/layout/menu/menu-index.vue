@@ -1,13 +1,9 @@
 <template>
-    <div>
-      <!--
+  <div>
+    <!--
         左侧导航栏设计，使用element-ui组件
       -->
-      <el-menu
-      :default-active="$route.path"
-      class="el-menu-vertical-demo"
-      background-color="#091527"
-      text-color="#fff"
+    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#091527" text-color="#fff"
       active-text-color="#ffd04b" router :collapse="is_collapse">
       <el-menu-item index>
         <!--
@@ -32,16 +28,16 @@
           <i class="el-icon-s-tools"></i>
           <span>组件管理</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item index="/elements/all"><i class="el-icon-s-grid"></i>
-            <span>查看组件</span></el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="/elements/change"><i class="el-icon-s-grid"></i>
-            <span>组件更改</span></el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      -->
+<el-menu-item-group>
+  <el-menu-item index="/elements/all"><i class="el-icon-s-grid"></i>
+    <span>查看组件</span></el-menu-item>
+</el-menu-item-group>
+<el-menu-item-group>
+  <el-menu-item index="/elements/change"><i class="el-icon-s-grid"></i>
+    <span>组件更改</span></el-menu-item>
+</el-menu-item-group>
+</el-submenu>
+-->
       <el-menu-item index="/target/index">
         <i class="el-icon-aim"></i>
         <span slot="title">目标</span>
@@ -54,38 +50,39 @@
         <i class="el-icon-document"></i>
         <span slot="title">结果</span>
       </el-menu-item>
-      
+
       <el-menu-item index="/manage">
         <i class="el-icon-setting"></i>
         <span slot="title">管理</span>
       </el-menu-item>
     </el-menu>
-    </div>
-  </template>
-  
-  <script>
-  
-  //从上一级传参is_collapse，is_collapse在layout的app-index.vue中定义
-  export default {
-    props:['is_collapse'],
-    methods:{
-      changeMenu(){
-        //此处$emit指向上一级layout的app-index.vue中定义额度changeMenu函数，将is_collapse响应式变量置反
-        this.$emit('changeMenu');
-      }
+  </div>
+</template>
+
+<script>
+
+//从上一级传参is_collapse，is_collapse在layout的app-index.vue中定义
+export default {
+  props: ['is_collapse'],
+  methods: {
+    changeMenu() {
+      //此处$emit指向上一级layout的app-index.vue中定义额度changeMenu函数，将is_collapse响应式变量置反
+      this.$emit('changeMenu');
     }
   }
-  </script>
+}
+</script>
 
 <style lang="less" scoped>
+.el-menu {
+  border-right: 0;
 
-.el-menu{
-  border-right :0;
-  .is-active{
+  .is-active {
     background: #5D90F7 !important;
     color: #fff !important;
   }
 }
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;

@@ -97,7 +97,7 @@ export default {
             }).then(() => {
                 //调用deleteElements函数
                 this.deleteElements(row.id);
-                
+
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -117,11 +117,11 @@ export default {
             this.tableData = res.data.data;
             this.total = res.data.length;
         },
-        async deleteElements(id){
+        async deleteElements(id) {
             //调用api
-            let res = await this.$api.deleteElements({id});
-            console.log('删除--------',res.data);
-            if (res.data.status == 200){
+            let res = await this.$api.deleteElements({ id });
+            console.log('删除--------', res.data);
+            if (res.data.status == 200) {
                 this.$message({
                     type: 'success',
                     message: '删除成功!'

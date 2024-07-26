@@ -7,118 +7,121 @@
                 </el-button>
                 目标详情
             </h3>
-            
+
         </div>
-    
+
         <div class="wrapper">
             <!--<h3>{{$route.query.target_id}}</h3>{{Data[$route.query.target_id].name}}-->
-            <el-descriptions column = 2 border>
+            <el-descriptions column=2 border>
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">名称</span>
                     <div class="fontClass">
-                    {{Data[$route.query.index].name}}
+                        {{ Data[$route.query.index].name }}
                     </div>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">ID</span>
                     <div class="fontClass">
-                    
+
                     </div>
                 </el-descriptions-item>
 
-                <el-descriptions-item :contentStyle="{'width' : '1000px'}">
+                <el-descriptions-item :contentStyle="{ 'width': '1000px' }">
                     <span slot="label" class="fontClass">描述</span>
                     <div class="fontClass">
-                    {{Data[$route.query.index].description}}
+                        {{ Data[$route.query.index].description }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">创建时间</span>
                     <div class="fontClass">
-                    {{Data[$route.query.index].create_time}}
+                        {{ Data[$route.query.index].create_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标范围</span>
                     <div class="fontClass">
-                    {{Data[$route.query.index].hosts}}
+                        {{ Data[$route.query.index].hosts }}
                     </div>
                 </el-descriptions-item>
-                
+
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">上次修改时间</span>
                     <div class="fontClass">
-                    {{Data[$route.query.index].last_modify_time}}
+                        {{ Data[$route.query.index].last_modify_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标数量</span>
                     <div class="fontClass">
-                        {{Data[$route.query.index].hosts_total}}
+                        {{ Data[$route.query.index].hosts_total }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">端口范围</span>
                     <div class="fontClass">
-                        {{Data[$route.query.index].port_list}}
+                        {{ Data[$route.query.index].port_list }}
                     </div>
                 </el-descriptions-item>
 
-            </el-descriptions> 
+            </el-descriptions>
         </div>
     </div>
 </template>
-  
+
 <script>
-  
+
 export default {
     methods:
     {
-        Goback(){
+        Goback() {
             this.$router.push('/target/index')
         },
-        async gettarget(){
+        async gettarget() {
             let res = await this.$api.GetTarget();
             console.log(res);
             this.Data = res.data.data;
         }
     },
     props: {
-      tableData:{
-        type : Array,
-        default: ()=>[],
-      }
+        tableData: {
+            type: Array,
+            default: () => [],
+        }
     },
-    data(){
-        return{
+    data() {
+        return {
             Data: this.tableData,
         }
     },
-    created(){
+    created() {
         this.gettarget();
     }
 }
 </script>
 
 <style lang="less" scoped>
-.header{
-    height:55px;
+.header {
+    height: 55px;
     background: #fff;
     border-bottom: 2px solid black;
 }
-.wrapper{
-  padding: 10px;
+
+.wrapper {
+    padding: 10px;
 }
-.fontClass{
-    font-size:20px;
+
+.fontClass {
+    font-size: 20px;
     font-family: Microsoft Yahei;
-    }
-.fontClasstitle{
-        font-size:30px;
-        font-family: Microsoft Yahei;
-        }
+}
+
+.fontClasstitle {
+    font-size: 30px;
+    font-family: Microsoft Yahei;
+}
 </style>
