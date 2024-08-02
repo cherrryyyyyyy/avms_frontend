@@ -24,21 +24,21 @@
         <el-main>
           <template>
             <el-table stripe=true :data="Data" height=590 border style="width: 100%">
-              <el-table-column prop="result_task_name" label="任务名称" width="150" align="center"
+              <el-table-column prop="name" label="任务名称" width="150" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="result_start_time" label="启动时间" width="200" align="center"
+              <el-table-column prop="start_time" label="启动时间" width="250" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="result_end_time" label="结束时间" width="200" align="center"
+              <el-table-column prop="end_time" label="结束时间" width="250" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="result_status" label="任务状态" width="150" align="center"
+              <el-table-column prop="status" label="任务状态" width="150" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="active_hosts" label="活跃主机" width="120" align="center" show-overflow-tooltip="true">
+              <el-table-column prop="active_host" label="活跃主机" width="120" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="vulnerabilities_count" label="漏洞数量" width="120" align="center"
+              <el-table-column prop="vuls" label="漏洞数量" width="120" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
               <el-table-column label="操作" align="center">
@@ -74,12 +74,6 @@ export default {
   components: {
     Pagination
   },
-  props: {
-    tableData: {
-      type: Array,
-      default: () => [],
-    }
-  },
   data() {
     return {
       options: [{
@@ -105,28 +99,65 @@ export default {
         value: '选项3',
         label: '每5s刷新一次'
       }],
-      total: 20,
-      Data: this.tableData,
+      total: 0,
+      Data: [],
+      result: [],
+      task: [],
+      page : 1,
     }
   },
   methods: {
     CurrentChange(val) {
       console.log('頁嗎', val);
       this.resultList(val);
+      this.page = val;
     },
     async resultList(page) {
-      this.Data = this.tableData.slice((page - 1) * 10, page * 10);
-      console.log(page);
+      let tasks = await this.$api.GetTask();
+      console.log('任务', tasks, page);
+      for (let task of tasks.data.data){
+        this.task.push(task);
+      }
+      for (let task of this.task){
+        this.result = {
+        name : '',
+        start_time : '',
+        end_time : '',
+        status : '',
+        active_host : 0,
+        vuls: 0,
+        }
+        console.log(task['name']);
+        let name = task['name'];
+        let res = await this.$api.GetResult({ name });
+        this.result.name = name;
+        this.result.start_time = task['start_time'];
+        this.result.end_time = task['finished_time'];
+        this.result.status = '完成';
+        this.result.active_host = res.data.data.length;
+        let count =0;
+        for (let key in res.data.data){
+            console.log(res.data.data[key]);
+            count += res.data.data[key].vmatch_vuls.length;
+        }
+        this.result.vuls = count;
+        this.Data.push(this.result)
+        console.log(page,res);
+      }
+      this.Data = this.Data.slice((page - 1) * 10, page * 10);
+      console.log('侧石', this.Data, page);
+      this.total = this.Data.length;
     },
     ResultDetail(index, row) {
       console.log(index, row);
-      this.showdetail(row.result_id)
+      index += (this.page - 1) * 10;
+      this.showdetail(row.name, index)
     },
-    showdetail(val) {
+    showdetail(val1, val2) {
       this.$router.push(
         {
           path: '/result/resultdetail',
-          query: { result_id: val }
+          query: { name: val1 , index: val2}
         })
     }
   },

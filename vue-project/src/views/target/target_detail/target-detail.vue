@@ -22,7 +22,7 @@
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">ID</span>
                     <div class="fontClass">
-
+                            {{ this.id[$route.query.index] }}
                     </div>
                 </el-descriptions-item>
 
@@ -85,6 +85,7 @@ export default {
             let res = await this.$api.GetTarget();
             console.log(res);
             this.Data = res.data.data;
+            this.id = res.data.id;
         }
     },
     props: {
@@ -96,6 +97,7 @@ export default {
     data() {
         return {
             Data: this.tableData,
+            id : []
         }
     },
     created() {

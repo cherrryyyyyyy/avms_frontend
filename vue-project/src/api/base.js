@@ -12,6 +12,8 @@ const base ={
     CreateTarget:"/api/create_target",
     DeleteTarget:"/api/delete_target",
     UpdateTarget:"/api/update_target",
+    GetResult:"/api/get_result",
+    GetTask:"/api/get_tasks"
 }
 
 export default base

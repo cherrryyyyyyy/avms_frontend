@@ -2,7 +2,7 @@
     <div>
         <div class="header">
             <h3>
-                <el-button type="primary" @click="Goback($route.query.result_id)" class="detailed" icon="el-icon-back">
+                <el-button type="primary" @click="Goback($route.query.name,$route.query.index_home)" class="detailed" icon="el-icon-back">
                     返回
                 </el-button>
                 主机结果详情
@@ -13,69 +13,62 @@
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">主机IP</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_name }}
+                        {{ Data[$route.query.index].ip }}
                     </div>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">ID</span>
                     <div class="fontClass">
-                        1345650909aeec0
+                        {{ this.id[$route.query.index] }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item :contentStyle="{ 'width': '500px' }">
                     <span slot="label" class="fontClass">厂商</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_OEM }}
+                        {{ Data[$route.query.index].hostnames[0].name }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">型号</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_model }}
+                        {{ Data[$route.query.index].hostnames[0].type }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">操作系统</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_OS }}
+                        {{ Data[$route.query.index].os.name }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">开放端口</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_open_ports }}
+                        {{ Data[$route.query.index].ports_opened.length }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">高危漏洞</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_hr_vul }}
+                        {{ Data[$route.query.index].vmatch_vuls.length }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">中危漏洞</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_mr_vul }}
+                        {{ Data[$route.query.index].vmatch_vuls.length }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">低危漏洞</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1][$route.query.host_id - 1].host_lr_vul }}
-                    </div>
-                </el-descriptions-item>
-
-                <el-descriptions-item>
-                    <span slot="label" class="fontClass">状态</span>
-                    <div class="fontClass">
-                        {{ Data[$route.query.result_id - 1].result_status }}
+                        {{ Data[$route.query.index].vmatch_vuls.length }}
                     </div>
                 </el-descriptions-item>
             </el-descriptions>
@@ -87,28 +80,33 @@
 
 export default {
     methods: {
-        Goback(val) {
+        Goback(val1, val2) {
             this.$router.push(
                 {
                     path: '/result/resultdetail',
-                    query: { result_id: val }
+                    query: { 
+                        name: val1,
+                        index : val2
+                     }
                 })
         },
-    },
-    props: {
-        hostData: {
-            type: Array,
-            default: () => [],
+        async hostdetail(){
+            let name = this.$route.query.name;
+            let res = await this.$api.GetResult({ name });
+            this.id = res.data.id;
+            this.Data = res.data.data;
+            console.log('主机', this.Data)
         }
     },
     data() {
         return {
-            Data: this.hostData,
+            Data: [],
+            id : [],
         }
     },
     created() {
         console.log('create host!!!!!!!!');
-        console.log(this.hostData);
+        this.hostdetail();
     }
 }
 </script>

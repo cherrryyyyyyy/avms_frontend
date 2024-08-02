@@ -42,6 +42,12 @@ const api ={
             method: 'post',
             data: params
         })
+    },
+    GetResult(params){
+        return axios.get(base.GetResult,{params})
+    },
+    GetTask(){
+        return axios.get(base.GetTask)
     }
 
 };
