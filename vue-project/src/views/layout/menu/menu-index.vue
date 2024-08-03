@@ -46,6 +46,14 @@
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
+      <el-menu-item index="/strategy/index">
+        <i class="el-icon-data-analysis"></i>
+        <span slot="title">策略管理</span>
+      </el-menu-item>
+      <el-menu-item index="/resource/index">
+        <i class="el-icon-files"></i>
+        <span slot="title">资源库</span>
+      </el-menu-item>
       <el-menu-item index="/result/index">
         <i class="el-icon-document"></i>
         <span slot="title">结果</span>

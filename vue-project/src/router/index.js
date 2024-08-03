@@ -10,6 +10,8 @@ import Target_index from '@/views/target/target-index/target-index.vue'
 import Task from '@/views/task/task-index.vue'
 import Result from '@/views/result/result-index.vue'
 import Manage from '@/views/manage/manage-index.vue'
+import Resource from '@/views/resource/resource_index.vue'
+import Strategy from '@/views/strategy/strategy_index.vue'
 import Add_target from '@/views/target/target_add/add-target.vue'
 import Target_Detail from '@/views/target/target_detail/target-detail.vue'
 import Task_Detail from '@/views/task/task_detail/task_detail.vue'
@@ -20,6 +22,12 @@ import Result_Detail from "@/views/result/result_detail/result_detail.vue"
 import Hosts_Detail from "@/views/result/hosts_detail/hosts_detail.vue"
 import Task_Change from "@/views/task/task_change/task_change.vue"
 import Target_edit from "@/views/target/target_edit/target_edit.vue"
+import Resource_index from "@/views/resource/resource-index/resource-index.vue"
+import Resource_detail from "@/views/resource/resource-detail/resource-detail.vue"
+import Strategy_index from "@/views/strategy/strategy-index/strategy-index.vue"
+import Add_strategy from "@/views/strategy/strategy-add/strategy-add.vue"
+import Strategy_edit from "@/views/strategy/strategy-edit/strategy-edit.vue"
+import Strategy_detail from "@/views/strategy/strategy-detail/strategy-detail.vue"
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -125,6 +133,50 @@ const routes=[
                     path:'hostsdetail',
                     name: Hosts_Detail,
                     component: Hosts_Detail
+                }
+            ]
+        },
+        {
+            path:'/strategy',
+            name:'strategy',
+            component: Strategy,
+            children:[
+                {
+                    path:'index',
+                    name: Strategy_index,
+                    component: Strategy_index
+                },
+                {
+                    path:'addstrategy',
+                    name: Add_strategy,
+                    component: Add_strategy
+                },
+                {
+                    path:'strategyedit',
+                    name: Strategy_edit,
+                    component: Strategy_edit
+                },
+                {
+                    path:'strategydetail',
+                    name: Strategy_detail,
+                    component: Strategy_detail
+                }
+            ]
+        },
+        {
+            path:'/resource',
+            name:'resource',
+            component: Resource,
+            children:[
+                {
+                    path:'index',
+                    name: Resource_index,
+                    component: Resource_index
+                },
+                {
+                    path:'resourceedit',
+                    name: Resource_detail,
+                    component: Resource_detail
                 }
             ]
         },
