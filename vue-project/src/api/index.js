@@ -48,7 +48,13 @@ const api ={
     },
     GetTask(){
         return axios.get(base.GetTask)
-    }
+    },
+    GetCves(params){
+        return axios.get(base.GetCves,{params})
+    },
+    GetActiveMethods(){
+        return axios.get(base.GetActiveMethods)
+    },
 
 };
 

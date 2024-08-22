@@ -13,7 +13,9 @@ const base ={
     DeleteTarget:"/api/delete_target",
     UpdateTarget:"/api/update_target",
     GetResult:"/api/get_result",
-    GetTask:"/api/get_tasks"
+    GetTask:"/api/get_tasks",
+    GetCves:"/api/get_cves",
+    GetActiveMethods:"/api/get_alive_scan_methods"
 }
 
 export default base

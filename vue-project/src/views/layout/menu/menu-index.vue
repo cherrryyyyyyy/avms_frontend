@@ -46,10 +46,18 @@
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
-      <el-menu-item index="/strategy/index">
-        <i class="el-icon-data-analysis"></i>
-        <span slot="title">策略管理</span>
-      </el-menu-item>
+      <el-submenu index="/">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>策略管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/strategy/index">端口扫描策略</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group>
+          <el-menu-item index="/pocmethod/index">POC扫描策略</el-menu-item>
+        </el-menu-item-group>        
+      </el-submenu>
       <el-menu-item index="/resource/index">
         <i class="el-icon-files"></i>
         <span slot="title">资源库</span>

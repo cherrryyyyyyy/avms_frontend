@@ -28,6 +28,8 @@ import Strategy_index from "@/views/strategy/strategy-index/strategy-index.vue"
 import Add_strategy from "@/views/strategy/strategy-add/strategy-add.vue"
 import Strategy_edit from "@/views/strategy/strategy-edit/strategy-edit.vue"
 import Strategy_detail from "@/views/strategy/strategy-detail/strategy-detail.vue"
+import POCMethod from "@/views/pocmethod/pocmethod_index.vue"
+import POCmethod_index from "@/views/pocmethod/pocmethod-index/pocmethod-index.vue"
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -137,6 +139,18 @@ const routes=[
             ]
         },
         {
+            path:'/pocmethod',
+            name:'pocmethod',
+            component: POCMethod,
+            children:[
+                {
+                    path:'index',
+                    name: POCmethod_index,
+                    component: POCmethod_index
+                }
+            ]
+        },
+        {
             path:'/strategy',
             name:'strategy',
             component: Strategy,
@@ -174,7 +188,7 @@ const routes=[
                     component: Resource_index
                 },
                 {
-                    path:'resourceedit',
+                    path:'resourcedetail',
                     name: Resource_detail,
                     component: Resource_detail
                 }
