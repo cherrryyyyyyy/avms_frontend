@@ -55,6 +55,23 @@ const api ={
     GetActiveMethods(){
         return axios.get(base.GetActiveMethods)
     },
+    CreatePortList(params){
+        return axios({
+            url: base.CreatePortList,
+            method: 'post',
+            data: params
+        })
+    },
+    DeletePortList(params){
+        return axios.get(base.DeletePortList,{params})
+    },
+    UpdatePortList(params){
+        return axios({
+            url: base.UpdatePortList,
+            method: 'post',
+            data: params
+        })
+    }
 
 };
 

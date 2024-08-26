@@ -15,7 +15,10 @@ const base ={
     GetResult:"/api/get_result",
     GetTask:"/api/get_tasks",
     GetCves:"/api/get_cves",
-    GetActiveMethods:"/api/get_alive_scan_methods"
+    GetActiveMethods:"/api/get_alive_scan_methods",
+    CreatePortList:"/api/create_port_list",
+    DeletePortList:"/api/delete_port_list",
+    UpdatePortList:"/api/update_port_list"
 }
 
 export default base

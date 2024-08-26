@@ -58,23 +58,24 @@ export default {
   },
   data() {
     return {
-      total: 20,
+      total: 241770,
       Data: [],
       page: 1,
     }
   },
   methods: {
-    CurrentChange(val) {
+    CurrentChange(val) { 
       console.log('頁嗎', val);
       this.cveList(val);
       this.page = val;
     },
     async cveList(page) {
+      let column = Math.ceil(page/100)
       //let column = 1;
-      let res = await this.$api.GetCves();
+      let res = await this.$api.GetCves({column});
       this.Data = res.data.data.slice((page - 1) * 10, page * 10);
       console.log('侧石', this.Data, page, res);
-      this.total = res.data.data.length;
+      //this.total = res.data.data.length;
     },
     CveDetail(index, row) {
       console.log(index, row);
