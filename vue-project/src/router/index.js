@@ -19,7 +19,9 @@ import Task_index from '@/views/task/task_index/task_index.vue'
 import Add_task from '@/views/task/task_add/task_add.vue'
 import Result_index from "@/views/result/result_index/result_index.vue"
 import Result_Detail from "@/views/result/result_detail/result_detail.vue"
-import Hosts_Detail from "@/views/result/hosts_detail/hosts_detail.vue"
+import Task_Overview from "@/views/result/result_detail/task_overview/task_overview.vue"
+import Asset_Statistics from "@/views/result/result_detail/asset_statistics/asset_statistics.vue"
+import Host_Vulnerability from "@/views/result/result_detail/host_vulnerability/host_vulnerability.vue"
 import Task_Change from "@/views/task/task_change/task_change.vue"
 import Target_edit from "@/views/target/target_edit/target_edit.vue"
 import Resource_index from "@/views/resource/resource-index/resource-index.vue"
@@ -129,12 +131,24 @@ const routes=[
                 {
                     path:'resultdetail',
                     name: Result_Detail,
-                    component: Result_Detail
-                },
-                {
-                    path:'hostsdetail',
-                    name: Hosts_Detail,
-                    component: Hosts_Detail
+                    component: Result_Detail,
+                    children:[
+                        {
+                            path:'taskoverview',
+                            name: Task_Overview,
+                            component: Task_Overview
+                        },
+                        {
+                            path:'assetstatistics',
+                            name: Asset_Statistics,
+                            component: Asset_Statistics
+                        },
+                        {
+                            path:'hostvulnerability',
+                            name: Host_Vulnerability,
+                            component: Host_Vulnerability
+                        },
+                    ]
                 }
             ]
         },

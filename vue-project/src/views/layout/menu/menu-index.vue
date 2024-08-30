@@ -66,11 +66,6 @@
         <i class="el-icon-document"></i>
         <span slot="title">结果</span>
       </el-menu-item>
-
-      <el-menu-item index="/manage">
-        <i class="el-icon-setting"></i>
-        <span slot="title">管理</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>

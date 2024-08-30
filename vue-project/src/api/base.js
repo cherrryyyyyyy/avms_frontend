@@ -18,7 +18,12 @@ const base ={
     GetActiveMethods:"/api/get_alive_scan_methods",
     CreatePortList:"/api/create_port_list",
     DeletePortList:"/api/delete_port_list",
-    UpdatePortList:"/api/update_port_list"
+    UpdatePortList:"/api/update_port_list",
+    CreateTask:"/api/create_task",
+    StartTask:"/api/start_task",
+    DeleteTask:"/api/delete_task",
+    UpdataTask:"/api/update_task",
+    QueryTask:"/api/query_task"
 }
 
 export default base

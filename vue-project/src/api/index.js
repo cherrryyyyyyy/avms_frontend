@@ -71,6 +71,22 @@ const api ={
             method: 'post',
             data: params
         })
+    },
+    StartTask(params){
+        return axios.get(base.StartTask,{params})
+    },
+    CreateTask(params){
+        return axios({
+            url: base.CreateTask,
+            method: 'post',
+            data: params
+        })
+    },
+    DeleteTask(params){
+        return axios.get(base.DeleteTask,{params})
+    },
+    QueryTask(params){
+        return axios.get(base.QueryTask,{params})
     }
 
 };

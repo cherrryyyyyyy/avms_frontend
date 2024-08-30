@@ -21,34 +21,40 @@
         </el-header>
         <el-main>
           <template>
-            <el-table stripe=true :data="Data" height=590 border style="width: 100%">
-              <el-table-column prop="task_name" label="任务名称" width="150" align="center" show-overflow-tooltip="true">
+            <el-table stripe=true :data="Data" height=590 border style="width: 100%" :key="itemKey">
+              <el-table-column prop="name" label="任务名称" width="150" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="task_describe" label="任务描述" width="250" align="center"
+              <el-table-column prop="description" label="任务描述" width="200" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="task_target" label="任务目标" width="120" align="center" show-overflow-tooltip="true">
+              <el-table-column prop="target" label="任务目标" width="120" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="active_scanning_Methods" label="活跃扫描方法" width="110" align="center"
+              <el-table-column prop="alive_scan_method" label="活跃扫描方法" width="110" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="task_type" label="任务类型" width="80" align="center" show-overflow-tooltip="true">
+              <el-table-column prop="type" label="任务类型" width="130" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="scheduling_time" label="调度时间" width="120" align="center"
+              <el-table-column prop="schedule_time" label="调度时间" width="120" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
               <el-table-column prop="create_time" label="创建时间" width="120" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="last_change_time" label="最近修改时间" width="120" align="center"
+              <el-table-column prop="last_modifid_time" label="最近修改时间" width="120" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="task_status" label="任务状态" width="120" align="center" show-overflow-tooltip="true">
+              <el-table-column prop="status" label="任务状态" width="120" align="center" show-overflow-tooltip="true">
+                <template slot-scope="scope">
+                  <p v-if="scope.row.status==4">完成</p>
+                  <p v-else-if="scope.row.status==1">未开始</p>
+                  <p v-else-if="scope.row.status==3">进行中</p>
+                  <p v-else-if="scope.row.status==2">准备中</p>
+                </template>
               </el-table-column>
-              <el-table-column prop="task_progress" label="任务进度" width="100" align="center"
+              <el-table-column prop="progress" label="任务进度" width="100" align="center"
                 show-overflow-tooltip="true">
                 <template slot-scope="scope">
                   <el-progress :text-inside="true" :stroke-width="26"
-                    :percentage="scope.row.task_progress"></el-progress>
+                    :percentage="scope.row.status == 1 ? 0 : scope.row.status == 2 ? 25 :scope.row.status == 3 ? 60 : scope.row.status == 4 ? 100 : 0"></el-progress>
                 </template>
               </el-table-column>
               <el-table-column label="操作" align="center">
@@ -64,7 +70,7 @@
                     @click="TaskChange(scope.$index, scope.row)">编辑</el-button>
 
                   <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete"
-                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    @click="TaskDelete(scope.$index, scope.row)">删除</el-button>
 
                 </template>
               </el-table-column>
@@ -108,6 +114,8 @@ export default {
         value: '选项4',
         label: '按修改时间排序'
       }],
+      current_page:1,
+      itemKey : 0,
       total: 20,
       Data: this.tableData,
     }
@@ -119,38 +127,93 @@ export default {
     CurrentChange(val) {
       console.log('頁嗎', val);
       this.taskList(val);
+      this.current_page = val;
     },
     async taskList(page) {
-      this.Data = this.tableData.slice((page - 1) * 10, page * 10);
-      console.log(page);
+      let res = await this.$api.GetTask();
+      this.Data = res.data.data.slice((page - 1) * 10, page * 10);
+      console.log('侧石', this.Data, page, res);
+      this.total = res.data.data.length;
+    },
+    async taskList1() {
+      let res = await this.$api.GetTask();
+      this.Data = res.data.data.slice(0, 10);
     },
     TaskDetail(index, row) {
       console.log(index, row);
-      this.showdetail(row.task_id)
+      this.showdetail(row)
     },
     showdetail(val) {
       this.$router.push(
         {
           path: '/task/taskdetail',
-          query: { task_id: val }
+          query: { index: val }
         })
     },
     TaskChange(index, row) {
       console.log(index, row);
-      this.showchange(row.task_id)
+      this.showchange(row)
     },
     showchange(val) {
       this.$router.push(
         {
           path: '/task/taskchange',
-          query: { task_id: val }
+          query: { index: val }
         })
+    },
+    TaskDelete(index, row){
+      console.log(index, row);
+      console.log(row.name);
+      this.$confirm('确定删除当前目标?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        //调用deleteElements函数
+        this.delete_task(row.name);
+
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    async delete_task(name){
+      let res = await this.$api.DeleteTask({name});
+      console.log('删除--------', res.data);
+      if (res.data.status == 200) {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }
+      //刷新界面
+      this.taskList(1);
+    },
+    TaskStart(index, row){
+      console.log(index, row);
+      this.start_task(row.name)
+      //while(this.Data[index].status!=4){
+      //  setInterval(this.taskList(this.current_page),1000);
+      //}
+    },
+    async start_task(name){
+      let res = await this.$api.StartTask({name});
+      console.log(res);
     }
+    
   },
   created() {
     this.taskList(1);
     this.total = this.tableData.length;
-  }
+  },
+    mounted() {
+      this.timer = setInterval(this.taskList1, 3000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
+    }
 }
 </script>
 

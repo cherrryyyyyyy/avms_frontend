@@ -11,36 +11,37 @@
     <el-header></el-header>
     <el-header></el-header>
     <div class="wrapper">
-      <el-form :model="ruleForm" :rules="rules" :options="options" ref="ruleForm" label-width="200px"
+      <el-form :model="ruleForm" :rules="rules" :options="options" :alive_scan_methods="alive_scan_methods" ref="ruleForm" label-width="200px"
         class="demo-ruleForm" style="width:1000px">
-        <el-form-item label="名称" prop="name">
+        <el-form-item label="名称" prop="name" required>
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="desc">
-          <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+        <el-form-item label="描述" prop="description" required>
+          <el-input type="textarea" v-model="ruleForm.description"></el-input>
         </el-form-item>
         <el-form-item label="目标" prop="target">
-          <el-select v-model="ruleForm.target" placeholder="请选择测试目标">
+          <el-select v-model="ruleForm.target" placeholder="请选择测试目标" required>
             <el-option v-for="option in options" :key="option.value" :label="option.lable" :value="option.value">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="活页扫描方法" prop="scan_method">
-          <el-select v-model="ruleForm.scan_method" placeholder="请选择扫描方法">
-            <el-option label="默认" value="默认"></el-option>
+        <el-form-item label="活页扫描方法" prop="alive_scan_method" required>
+          <el-select v-model="ruleForm.alive_scan_method" placeholder="请选择扫描方法">
+            <el-option v-for="method in alive_scan_methods" :key="method.value" :label="method.lable" :value="method.value">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="类型" prop="class">
-          <el-select v-model="ruleForm.class" placeholder="请选择类型">
-            <el-option label="按需" value="按需"></el-option>
-            <el-option label="调度" value="调度"></el-option>
+        <el-form-item label="类型" prop="type" required>
+          <el-select v-model="ruleForm.type" placeholder="请选择类型">
+            <el-option label="按需" value="on_demand"></el-option>
+            <el-option label="调度" value="schedule"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="调度时间" required>
+        <el-form-item label="调度时间" required v-if="IsShow(ruleForm.type)">
           <el-col :span="11">
             <el-form-item prop="date1">
               <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"
-                value-format="yyyy/MM/dd"></el-date-picker>
+                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
@@ -67,28 +68,28 @@ export default {
       ruleForm: {
         name: '',
         target: '',
-        desc: '',
-        value: '',
+        description: '',
         date1: '',
         date2: '',
-        class: '',
-        scan_method: '',
+        type: '',
+        alive_scan_method: '',
       },
       options: [],
+      alive_scan_methods: [],
       rules: {
         name: [
           { required: true, message: '请输入组件名称', trigger: 'blur' }
         ],
-        class: [
+        type: [
           { required: true, message: '请选择端口范围', trigger: 'change' }
         ],
-        scan_method: [
+        alive_scan_method: [
           { required: true, message: '请选择扫描方法', trigger: 'change' }
         ],
         target: [
           { required: true, message: '请选择测试目标', trigger: 'change' }
         ],
-        desc: [
+        description: [
           { required: true, message: '请填写组件描述', trigger: 'blur' }
         ],
         date1: [
@@ -99,13 +100,18 @@ export default {
         ]
       },
       form: {},
-      ddata: this.$store.state.TargetData,
     }
 
   },
   methods: {
     Goback() {
       this.$router.push('/task/index')
+    },
+    IsShow(type){
+      if(type == 'schedule'){
+        return true;
+      }
+      return false;
     },
     submitForm(formName, ruleForm) {
       console.log(new Date());
@@ -125,11 +131,20 @@ export default {
       //console.log(this.ddata[0].target_name);
       console.log(this.options);
     },
+    async get_alive_scan_methods(){
+      let res = await this.$api.GetActiveMethods();
+      console.log(res);
+      let data2 = res.data.data;
+      data2.forEach(
+        data => {
+          this.alive_scan_methods.push({ lable: data.name, value: data.seq });
+        }
+      );
+    },
     async getoptions() {
       let res = await this.$api.GetTarget();
-      this.ddata = res.data.data;
-      console.log(this.$store.state.TargetData);
-      this.ddata.forEach(
+      let data1 = res.data.data;
+      data1.forEach(
         data => {
           this.options.push({ lable: data.name, value: data.name });
         }
@@ -139,6 +154,7 @@ export default {
   created() {
     console.log('chaungjian');
     this.getoptions();
+    this.get_alive_scan_methods();
   }
 }
 </script>

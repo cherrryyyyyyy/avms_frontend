@@ -151,13 +151,13 @@ export default {
     ResultDetail(index, row) {
       console.log(index, row);
       index += (this.page - 1) * 10;
-      this.showdetail(row.name, index)
+      this.showdetail(row)
     },
-    showdetail(val1, val2) {
+    showdetail(val) {
       this.$router.push(
         {
           path: '/result/resultdetail',
-          query: { name: val1 , index: val2}
+          query: { index: val }
         })
     }
   },
