@@ -46,7 +46,7 @@
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
-      <el-submenu index="/">
+      <el-submenu index="/strategy">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>策略管理</span>
@@ -58,10 +58,21 @@
           <el-menu-item index="/pocmethod/index">POC扫描策略</el-menu-item>
         </el-menu-item-group>        
       </el-submenu>
-      <el-menu-item index="/resource/index">
-        <i class="el-icon-files"></i>
-        <span slot="title">资源库</span>
-      </el-menu-item>
+      <el-submenu index="/resource">
+        <template slot="title">
+          <i class="el-icon-files"></i>
+          <span>资源库</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/resource/index">CVE库资源</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group>
+          <el-menu-item index="/fingerprints/index">指纹库资源</el-menu-item>
+        </el-menu-item-group>        
+        <el-menu-item-group>
+          <el-menu-item index="/pocview/index">POC资源</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
       <el-menu-item index="/result/index">
         <i class="el-icon-document"></i>
         <span slot="title">结果</span>

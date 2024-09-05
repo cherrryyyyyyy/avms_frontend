@@ -32,6 +32,12 @@ import Strategy_edit from "@/views/strategy/strategy-edit/strategy-edit.vue"
 import Strategy_detail from "@/views/strategy/strategy-detail/strategy-detail.vue"
 import POCMethod from "@/views/pocmethod/pocmethod_index.vue"
 import POCmethod_index from "@/views/pocmethod/pocmethod-index/pocmethod-index.vue"
+import FingerPrints from "@/views/fingerprints/fingerprints_index.vue"
+import FingerPrints_index from "@/views/fingerprints/fingerprints-index/fingerprints-index.vue"
+import FingerPrints_detail from "@/views/fingerprints/fingerprints-detail/fingerprints-detail.vue"
+import PocView from "@/views/pocview/pocview-index.vue"
+import PocView_index from "@/views/pocview/pocview_index/pocview_index.vue"
+
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
 
@@ -212,7 +218,36 @@ const routes=[
             path:'/manage',
             name:'manage',
             component: Manage,
-        }
+        },
+        {
+            path:'/fingerprints',
+            name:'fingerprints',
+            component: FingerPrints,
+            children:[
+                {
+                    path:'index',
+                    name: FingerPrints_index,
+                    component: FingerPrints_index
+                },
+                {
+                    path:'detail',
+                    name: FingerPrints_detail,
+                    component: FingerPrints_detail
+                }
+            ]
+        },
+        {
+            path:'/pocview',
+            name:'pocview',
+            component: PocView,
+            children:[
+                {
+                    path:'index',
+                    name: PocView_index,
+                    component: PocView_index
+                }
+            ]
+        },
     ]
     },
     {

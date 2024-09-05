@@ -59,8 +59,10 @@ export default {
     height: 55px;
     background: #fff;
     border-bottom: 2px solid black;
-}
-
+    display: flex;
+    align-items: center;
+  
+  }
 .wrapper {
     padding: 10px;
 }

@@ -2,8 +2,10 @@
     <div>
         <div class="header">
             <h3>
-                <el-button type="primary" @click="Goback" class="detailed" icon="el-icon-back">
-                    返回
+                <el-button type="text" @click="Goback" class="detailed">
+                    <h3>
+                        ← 返回
+                    </h3>
                 </el-button>
                 编辑目标
             </h3>
@@ -72,7 +74,10 @@ export default {
     height: 55px;
     background: #fff;
     border-bottom: 2px solid black;
-}
+    display: flex;
+    align-items: center;
+  
+  }
 
 .wrapper {
     padding: 10px;

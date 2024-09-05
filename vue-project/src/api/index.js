@@ -87,6 +87,15 @@ const api ={
     },
     QueryTask(params){
         return axios.get(base.QueryTask,{params})
+    },
+    GetFPS(){
+        return axios.get(base.GetFPS)
+    },
+    GetFPSFile(params){
+        return axios.get(base.GetFPSFile,{params})
+    },
+    GetPOC(){
+        return axios.get(base.GetPOC)
     }
 
 };
