@@ -18,9 +18,33 @@ npm run serve 开启服务
 2.  完成vue项目build实验
 3.  完成整体页面结构编写和api设置
 
-#### todolist
 
-1.  设置api对数据库操作功能
-2.  首页仪表盘编写
-3.  整体页面美化
+# vue-project
 
+## 项目构建
+
+在vue-project文件夹下执行：
+```
+npm install
+```
+
+### 编译并以热加载模式运行
+在vue-project文件夹下执行：
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### API地址设置
+```
+vue-project文件夹下 vue-config.js文件，修改target地址为avms虚拟机flask服务器地址
+```
