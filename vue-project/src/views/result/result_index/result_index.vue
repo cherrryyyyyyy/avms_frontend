@@ -118,6 +118,7 @@ export default {
       for (let task of tasks.data.data){
         this.task.push(task);
       }
+      console.log(this.task)
       for (let task of this.task){
         this.result = {
         name : '',
@@ -130,6 +131,7 @@ export default {
         console.log(task['name']);
         let name = task['name'];
         let res = await this.$api.GetResult({ name });
+        console.log(res)
         this.result.name = name;
         this.result.start_time = task['start_time'];
         this.result.end_time = task['finished_time'];

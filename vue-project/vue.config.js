@@ -6,7 +6,7 @@ module.exports = defineConfig({
     proxy:{
       //使用devserver的proxy配置远程代理，将'/api'路由下的请求跳转给target: 'http://localhost:3000/'网址处理
       '/api' : {
-        target: 'http://192.168.137.69:5000/',
+        target: 'http://192.168.137.18:5000/',
         //用于支持websocket
         ws: true,
         //changeOrigin: true 将请求的头部的Host字段改为被代理服务器的Host字段
