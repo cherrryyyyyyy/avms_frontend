@@ -16,76 +16,76 @@
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">名称</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].task_name }}
+                        {{ Data.name }}
                     </div>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">ID</span>
                     <div class="fontClass">
-
+                        {{ Data.id }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item :contentStyle="{ 'width': '1000px' }">
                     <span slot="label" class="fontClass">描述</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].task_describe }}
+                        {{ Data.description }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">创建时间</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].create_time }}
+                        {{ Data.create_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].task_target }}
+                        {{ Data.target }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">上次修改时间</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].last_change_time }}
+                        {{ Data.last_modifid_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">扫描次序</span>
                     <div class="fontClass">
-
+                        {{ Data.type }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">活跃扫描方法</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].active_scanning_Methods }}
+                        {{ Data.alive_scan_method }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">类型</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].task_type }}
+                        {{ Data.type }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">调度时间</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.task_id - 1].scheduling_time }}
+                        {{ Data.scheduling_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">任务状态</span>
                     <div class="fontClass">
-
+                        {{ Data.status }}
                     </div>
                 </el-descriptions-item>
 
@@ -94,7 +94,8 @@
                     <div class="fontClass">
                         <template>
                             <el-progress :text-inside="true" :stroke-width="26"
-                                :percentage="Data[$route.query.task_id - 1].task_progress"></el-progress>
+                    :percentage="Data.status == 1 ? 0 : Data.status == 2 ? 25 :Data.status == 3 ? 60 : Data.status == 4 ? 100 : 0"></el-progress>
+
                         </template>
                     </div>
                 </el-descriptions-item>
@@ -120,7 +121,7 @@ export default {
     },
     data() {
         return {
-            Data: this.tableData,
+            Data: this.$route.query.index,
         }
     },
     created() {

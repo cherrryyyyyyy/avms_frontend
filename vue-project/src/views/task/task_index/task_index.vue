@@ -29,7 +29,7 @@
               </el-table-column>
               <el-table-column prop="target" label="任务目标" width="120" align="center" show-overflow-tooltip="true">
               </el-table-column>
-              <el-table-column prop="alive_scan_method" label="活跃扫描方法" width="110" align="center"
+              <el-table-column prop="asmethod" label="活跃扫描方法" width="110" align="center"
                 show-overflow-tooltip="true">
               </el-table-column>
               <el-table-column prop="type" label="任务类型" width="130" align="center" show-overflow-tooltip="true">

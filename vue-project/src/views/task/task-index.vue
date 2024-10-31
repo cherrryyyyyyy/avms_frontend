@@ -41,12 +41,12 @@ export default {
                 type: '',
                 schedule_time: '',
                 tgt_name: '',
-                alive_scan_method: '',
+                asmethod: '',
             }
             this.form.name = formName.name;
             this.form.description = formName.description;
             this.form.type = formName.type;
-            this.form.alive_scan_method = formName.alive_scan_method;
+            this.form.asmethod = formName.asmethod;
             this.form.tgt_name = formName.target;
             if(formName.type == 'schedule'){
                 this.form.schedule_time = formName.date1 + ' ' + formName.date2;

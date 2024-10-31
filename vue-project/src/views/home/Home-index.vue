@@ -130,6 +130,7 @@ export default {
         let name = D['name'];
         let result = await this.$api.GetResult({ name });
         for (let host of result.data.data) {
+          console.log('!!!',host);
           for (let vul of host.vmatch_vuls) {
             if (vul.impact > 5) {
               count_high++;

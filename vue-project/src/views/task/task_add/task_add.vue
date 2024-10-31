@@ -27,8 +27,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="活页扫描方法" prop="alive_scan_method" required>
-          <el-select v-model="ruleForm.alive_scan_method" placeholder="请选择扫描方法">
+        <el-form-item label="活页扫描方法" prop="asmethod" required>
+          <el-select v-model="ruleForm.asmethod" placeholder="请选择扫描方法">
             <el-option v-for="method in alive_scan_methods" :key="method.value" :label="method.lable" :value="method.value">
             </el-option>
           </el-select>
@@ -74,7 +74,7 @@ export default {
         date1: '',
         date2: '',
         type: '',
-        alive_scan_method: '',
+        asmethod: '',
       },
       options: [],
       alive_scan_methods: [],
@@ -139,7 +139,7 @@ export default {
       let data2 = res.data.data;
       data2.forEach(
         data => {
-          this.alive_scan_methods.push({ lable: data.name, value: data.seq });
+          this.alive_scan_methods.push({ lable: data.name, value: data.value });
         }
       );
     },

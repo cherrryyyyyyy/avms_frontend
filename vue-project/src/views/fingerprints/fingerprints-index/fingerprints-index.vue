@@ -11,7 +11,7 @@
           <el-main>
             <template>
               <el-table stripe=true :data="Data" height=590 border style="width: 100%">
-                <el-table-column prop="filename" label="指纹文件名称" width="200" align="center" show-overflow-tooltip="true">
+                <el-table-column prop="name" label="指纹文件名称" width="200" align="center" show-overflow-tooltip="true">
                 </el-table-column>
                 <el-table-column prop="keyword" label="指纹文件类型" width="200" align="center" show-overflow-tooltip="true">
                 </el-table-column>
@@ -77,7 +77,7 @@
         console.log(index, row);
         //index += (this.page - 1) * 10;
         console.log(index)
-        this.showdetail(this.id[index], row.filename)
+        this.showdetail(this.id[index], row.name)
       },
       showdetail(index, filename) {
         this.$router.push(
