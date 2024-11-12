@@ -1,105 +1,78 @@
 <template>
   <div>
-    <div class="header" style="font-size: 20px; font-family: '黑体';">
+    <div class="header">
       <h3>
         首页
       </h3>
     </div>
     <div class="wrapper">
-      <el-row :gutter="12">
-        <el-col :span="6">
-          <el-card shadow="always" style="text-align: center; background-color:aquamarine; font-size: 25px; font-family: '宋体';">
-            资产
-            <div style="font-size: 30px; font-family: '黑体';">
-              {{this.assets_count}}
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always" style="text-align: center; background-color:aquamarine; font-size: 20px; font-family: '宋体';">
-            存活IP
-            <div style="font-size: 30px; font-family: '黑体';">
-              {{this.alive_ip}}
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always" style="text-align: center; background-color:aquamarine; font-size: 20px; font-family: '宋体';">
-            端口开放
-            <div style="font-size: 30px; font-family: '黑体';">
-              {{this.open_ports}}
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card shadow="always" style="text-align: center; background-color:aquamarine; font-size: 20px; font-family: '宋体';">
-            漏洞
-            <div style="font-size: 30px; font-family: '黑体';">
-              {{this.vul_count}}
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-
-
-
-
-      <el-row :gutter="12" style="background-color:aquamarine;">
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>硬件</h2>
+      <el-row>
+        <el-col :span="10">
           <div class="grid-content">
             <div class="echart" id="mychart" :style="myChartStyle"></div>
           </div>
         </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>硬件厂商</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart" :style="myChartStyle"></div>
-          </div>
-        </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>软件</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart1" :style="myChartStyle"></div>
-          </div>
-        </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>软件厂商</h2>
+        <el-col :span="10">
           <div class="grid-content">
             <div class="echart" id="mychart1" :style="myChartStyle"></div>
           </div>
         </el-col>
       </el-row>
+      <el-row :gutter="24">
+        <el-col :span="12">
+          <div class="grid-content bg-purple">
+            <h2>
+              系统目标列表
+            </h2>
+            <template>
+              <el-table :data="targetData" style="width: 100%">
+                <el-table-column prop="name" label="目标名称">
+                </el-table-column>
+                <el-table-column prop="hosts.length" label="目标主机数">
+                </el-table-column>
+                <el-table-column prop="last_modify_time" label="最近修改时间">
+                </el-table-column>
+              </el-table>
+            </template>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="grid-content bg-purple">
+            <h2>
+              系统任务列表
+            </h2>
+            <template>
+              <el-table ref="singleTable" :data="taskData" highlight-current-row style="width: 100%">
+                <el-table-column type="index" width="50">
+                </el-table-column>
+                <el-table-column property="name" label="任务名称" width="150">
+                </el-table-column>
+                <el-table-column property="status" label="任务状态" width="120">
+                  <template slot-scope="scope">
+                    <p v-if="scope.row.status == 4">完成</p>
+                    <p v-else-if="scope.row.status == 1">未开始</p>
+                    <p v-else-if="scope.row.status == 3">进行中</p>
+                    <p v-else-if="scope.row.status == 2">准备中</p>
+                  </template>
+                </el-table-column>
+                <el-table-column property="alive_hosts" label="存活主机数" width="120">
+                </el-table-column>
+                <el-table-column property="finished_hosts" label="目标主机数">
+                </el-table-column>
+                <el-table-column property="vul_high" label="漏洞信息">
+                  <template slot-scope="scope">
+                    <el-tag type="danger">{{
+                      scope.row.vul_high }}</el-tag>
 
-      <el-row :gutter="12" style="background-color:aquamarine;">
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>资产类型</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart" :style="myChartStyle"></div>
-          </div>
-        </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>IP</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart" :style="myChartStyle"></div>
-          </div>
-        </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>端口</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart1" :style="myChartStyle"></div>
-          </div>
-        </el-col>
-        <el-col :span="6" style="background-color:aliceblue">
-          <h2>漏洞情况</h2>
-          <div class="grid-content">
-            <div class="echart" id="mychart1" :style="myChartStyle"></div>
+                    <el-tag type="warning">  {{
+                      scope.row.vul_low }}</el-tag>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
           </div>
         </el-col>
       </el-row>
-
-
-
 
 
     </div>
@@ -116,10 +89,6 @@ export default {
       taskDone: 0,
       targetData: [],
       resultData: [],
-      open_ports: 0,
-      assets_count: 0,
-      vul_count: 0,
-      alive_ip: 0,
       chart: null,
       task: [],
       total: 0,
@@ -140,7 +109,7 @@ export default {
         clicks: 112342
       },
       ],
-      myChartStyle: { float: "left", width: "100%", height: "400px"} //图表样式
+      myChartStyle: { float: "left", width: "100%", height: "400px" } //图表样式
     }
   },
   mounted() {
@@ -196,11 +165,9 @@ export default {
       let tasks = await this.$api.GetTask();
       console.log('首页任务统计', tasks.data.data);
       for (let task of tasks.data.data) {
-        console.log('task',task)
+        console.log(task)
         this.task.push(task);
       }
-      let ips = new Set()
-      let ports = new Set()
       for (let task of this.task) {
         this.result = {
           name: '',
@@ -214,7 +181,7 @@ export default {
         console.log(task['name']);
         let name = task['name'];
         let res = await this.$api.GetResult({ name });
-        console.log('raw result',res)
+        console.log(res)
         this.result.name = name;
         this.result.start_time = task['start_time'];
         this.result.end_time = task['finished_time'];
@@ -223,10 +190,6 @@ export default {
         let count1 = 0;
         let count2 = 0;
         for (let key in res.data.data) {
-          ips.add(res.data.data[key].ip)
-          for(let port of res.data.data[key].ports_opened){
-            ports.add(port.port_id);
-          }
           for (let vul of res.data.data[key].vmatch_vuls) {
             console.log(vul);
             if (vul.impact > 5) {
@@ -241,17 +204,11 @@ export default {
         this.result.vuls_low = count2;
         this.Data.push(this.result)
       }
-      console.log('ipip',ips);
-      console.log('portport',ports);
-      this.alive_ip = ips.size;
-      this.open_ports = ports.size;
-      console.log('num',this.alive_ip);
       for (let data of this.Data){
         this.vuls_high += data.vuls_high;
         this.vuls_low += data.vuls_low;
       }
-      console.log('结果', this.Data);
-      this.vul_count = this.vuls_high + this.vuls_low;
+      console.log('侧石', this.Data);
       this.total = this.Data.length;
       this.initEchartsResult();
     },
@@ -266,7 +223,7 @@ export default {
         },
         title: {
           // 设置饼图标题，位置设为顶部居中
-          //text: "系统任务统计",
+          text: "系统任务统计",
           top: "0%",
           left: "center"
         },
@@ -348,7 +305,7 @@ export default {
 <style lang="less" scoped>
 .header {
   height: 55px;
-  background: #d6e6f9;
+  background: #fff;
   border-bottom: 2px solid black;
   display: flex;
   align-items: center;
@@ -357,19 +314,17 @@ export default {
 
 .wrapper {
   padding: 10px;
-  background: #d6e6f9;
+
   .el-row {
     margin-bottom: 20px;
-    background: #d6e6f9;
+
     &:last-child {
       margin-bottom: 0;
-      background: #d6e6f9;
     }
   }
 
   .el-col {
     border-radius: 4px;
-    background: #d6e6f9;
   }
 
   .bg-purple-dark {
@@ -399,12 +354,11 @@ export default {
   .grid-content {
     border-radius: 4px;
     min-height: 36px;
-    background: aliceblue;
   }
 
   .row-bg {
     padding: 10px 0;
-    background: #d6e6f9;
+    background-color: #f9fafc;
   }
 }
 </style>

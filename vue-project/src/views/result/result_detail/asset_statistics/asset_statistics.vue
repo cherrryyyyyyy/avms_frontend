@@ -14,7 +14,7 @@
             text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="/result/resultdetail/taskoverview">任务概况</el-menu-item>
             <el-menu-item index="/result/resultdetail/assetstatistics">目标信息</el-menu-item>
-            <el-menu-item index="/result/resultdetail/hostvulnerability">主机漏洞</el-menu-item>
+            <el-menu-item index="/result/resultdetail/hostvulnerability" :disabled="this.vulbool">主机漏洞</el-menu-item>
         </el-menu>
         <div class="wrapper">
             <el-row>
@@ -117,6 +117,8 @@ export default {
         return {
             hostData: this.hostD,
             hostSelectData: [],
+            vulbool: false,
+
         }
     },
     props: {
@@ -136,6 +138,13 @@ export default {
     },
     created() {
         console.log('chuang!!', this.hostData);
+        let vuls =0;
+        for(let data of this.hostData){
+            vuls+=data.vmatch_vuls.length;
+        }
+        if(vuls == 0){
+            this.vulbool = true;
+        }
         this.hostSelectData = this.hostData[0];
     }
 }

@@ -14,7 +14,7 @@
             text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="/result/resultdetail/taskoverview">任务概况</el-menu-item>
             <el-menu-item index="/result/resultdetail/assetstatistics">目标信息</el-menu-item>
-            <el-menu-item index="/result/resultdetail/hostvulnerability">主机漏洞</el-menu-item>
+            <el-menu-item index="/result/resultdetail/hostvulnerability" :disabled="this.vulbool">主机漏洞</el-menu-item>
         </el-menu>
 
         <div class="wrapper">
@@ -28,7 +28,7 @@
                 <el-descriptions-item labelStyle="width: 150px">
                     <span slot="label" class="fontClass">任务状态</span>
                     <div class="fontClass">
-                        {{ this.taskData.status }}
+                        {{ this.status }}
                     </div>
                 </el-descriptions-item>
 
@@ -53,7 +53,7 @@
                 <el-descriptions-item labelStyle="width: 125px">
                     <span slot="label" class="fontClass">存活探测方式</span>
                     <div class="fontClass">
-                        {{ this.alive_scan_methods[this.taskData.alive_scan_method].label }}
+                        {{ this.asmethod }}
                     </div>
                 </el-descriptions-item>
 
@@ -92,6 +92,9 @@ export default {
             hostData: this.hostD,
             taskData: this.taskD,
             alive_scan_methods: [],
+            asmethod: '',
+            status: '',
+            vulbool: false
         }
     },
     props: {
@@ -110,18 +113,40 @@ export default {
         },
         async getscanmethod() {
             let res = await this.$api.GetActiveMethods();
-            console.log(res);
+            console.log('asmethod', res);
             let data2 = res.data.data;
             data2.forEach(
                 data => {
-                    this.alive_scan_methods.push({ label: data.name, value1: data.seq ,value2: data.parameter});
+                    this.alive_scan_methods.push({ label: data.name, value: data.value });
                 }
             );
+            for (let asmethod of this.alive_scan_methods) {
+                if (asmethod.value == this.taskData.asmethod) {
+                    this.asmethod = asmethod.label;
+                }
+            }
+            console.log(this.asmethod);
         }
     },
     created() {
         this.getscanmethod();
-        console.log('chuang!!', this.hostData, this.taskData,this.alive_scan_methods);
+        console.log('chuang!!!!!!', this.hostData, this.taskData, this.alive_scan_methods);
+        let vuls =0;
+        for(let data of this.hostData){
+            vuls+=data.vmatch_vuls.length;
+        }
+        if(vuls == 0){
+            this.vulbool = true;
+        }
+        if(this.taskData.status == 3){
+            this.status = '进行中'
+        }
+        if(this.taskData.status == 4){
+            this.status = '已完成'
+        }
+        if(this.taskData.status == 2){
+            this.status = '准备中'
+        }
     }
 }
 </script>
@@ -133,8 +158,8 @@ export default {
     border-bottom: 2px solid black;
     display: flex;
     align-items: center;
-  
-  }
+
+}
 
 .wrapper {
     padding: 10px;
