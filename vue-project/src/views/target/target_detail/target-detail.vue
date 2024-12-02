@@ -18,55 +18,55 @@
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">名称</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].name }}
+                        {{ this.Data.name }}
                     </div>
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">ID</span>
                     <div class="fontClass">
-                            {{ this.id[$route.query.index] }}
+                            {{ this.Data._id }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item :contentStyle="{ 'width': '1000px' }">
                     <span slot="label" class="fontClass">描述</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].description }}
+                        {{ this.Data.description }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">创建时间</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].create_time }}
+                        {{ this.Data.create_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标范围</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].hosts }}
+                        {{ this.Data.hosts }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">上次修改时间</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].last_modify_time }}
+                        {{ this.Data.last_modify_time }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">目标数量</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].hosts_total }}
+                        {{ this.Data.hosts_total }}
                     </div>
                 </el-descriptions-item>
 
                 <el-descriptions-item>
                     <span slot="label" class="fontClass">端口范围</span>
                     <div class="fontClass">
-                        {{ Data[$route.query.index].port_list }}
+                        {{ this.Data.port_list }}
                     </div>
                 </el-descriptions-item>
 
@@ -84,10 +84,11 @@ export default {
             this.$router.push('/target/index')
         },
         async gettarget() {
-            let res = await this.$api.GetTarget();
-            console.log(res);
-            this.Data = res.data.data;
-            this.id = res.data.id;
+            //let res = await this.$api.GetTarget();
+            
+            this.Data = this.$route.query.index;
+            console.log(this.Data);
+            //this.id = res.data.id;
         }
     },
     props: {

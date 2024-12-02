@@ -11,14 +11,9 @@
           <el-main>
             <template>
               <el-table stripe=true :data="Data" height=590 border style="width: 100%">
-                <el-table-column prop="name" label="指纹文件名称" width="200" align="center" show-overflow-tooltip="true">
+                <el-table-column prop="name" label="指纹文件名称" width="1000" align="center" show-overflow-tooltip="true">
                 </el-table-column>
-                <el-table-column prop="keyword" label="指纹文件类型" width="200" align="center" show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column prop="length" label="指纹文件大小" width="200" align="center" show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column prop="uploadDate" label="指纹文件上传时间" width="300" align="center" show-overflow-tooltip="true">
-                </el-table-column>
+                
                 <el-table-column label="操作" align="center">
                   <!--使用template拿取整行的数据 scope.$index 当前行索引号， scope.row 当前行内容-->
                   <template slot-scope="scope">
@@ -77,14 +72,13 @@
         console.log(index, row);
         //index += (this.page - 1) * 10;
         console.log(index)
-        this.showdetail(this.id[index], row.name)
+        this.showdetail(row)
       },
-      showdetail(index, filename) {
+      showdetail(row) {
         this.$router.push(
           {
             path: '/fingerprints/detail',
-            query: { index: index,
-              name: filename
+            query: { index: row,
             }
           })
       }

@@ -26,7 +26,8 @@ const base ={
     QueryTask:"/api/query_task",
     GetFPS:"/api/get_fps_file",
     GetFPSFile:"/api/get_fps_by_id",
-    GetPOC:"/api/get_pocs"
+    GetPOC:"/api/get_pocs",
+    GetStatistics:"/api/get_statistics"
 }
 
 export default base

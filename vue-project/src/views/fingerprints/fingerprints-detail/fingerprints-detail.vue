@@ -18,13 +18,13 @@
                         <el-descriptions-item labelStyle="width: 125px">
                             <span slot="label" class="fontClass">指纹库名称</span>
                             <div class="fontClass">
-                               {{ this.$route.query.name }}
+                               {{ this.row.name }}
                             </div>
                         </el-descriptions-item>
                     </el-descriptions>
                 </el-row>
             </el-header>
-            <el-input type="textarea" :rows="35" v-model=this.data>
+            <el-input type="textarea" :rows="35" v-model=this.row.content>
             </el-input>
         </div>
     </div>
@@ -38,7 +38,8 @@ export default {
         return {
             data: [],
             index: [],
-            xml_show: []
+            xml_show: [],
+            row: {}
         }
     },
     methods: {
@@ -46,8 +47,8 @@ export default {
             this.$router.push('/fingerprints/index')
         },
         detail_init() {
-            this.id = this.$route.query.index;
-            this.get_data(this.id);
+            this.row = this.$route.query.index;
+            console.log(this.row);
         },
         async get_data(id) {
             let res = await this.$api.GetFPSFile({ id });

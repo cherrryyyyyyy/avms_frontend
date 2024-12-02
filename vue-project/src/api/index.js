@@ -96,6 +96,9 @@ const api ={
     },
     GetPOC(){
         return axios.get(base.GetPOC)
+    },
+    GetStatistics(params){
+        return axios.get(base.GetStatistics,{params})
     }
 
 };

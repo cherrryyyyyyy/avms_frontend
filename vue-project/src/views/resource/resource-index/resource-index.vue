@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <h3>
-        目标（{{ total }}个）
+        CVE资源库（{{ total }}个）
       </h3>
     </div>
 
@@ -69,12 +69,13 @@ export default {
       this.cveList(val);
       this.page = val;
     },
-    async cveList(page) {
-      let column = Math.ceil(page/100)
+    async cveList(page1) {
+      let page = Math.ceil(page1/100)
       //let column = 1;
-      let res = await this.$api.GetCves({column});
-      this.Data = res.data.data.slice((page - 1) * 10, page * 10);
-      console.log('侧石', this.Data, page, res);
+      let res = await this.$api.GetCves({page});
+      let page2 = page1 - (page-1)* 100;
+      this.Data = res.data.data.slice((page2 - 1) * 10, page2 * 10);
+      console.log('侧石', this.Data, page1, res);
       //this.total = res.data.data.length;
     },
     CveDetail(index, row) {

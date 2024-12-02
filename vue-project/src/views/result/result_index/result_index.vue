@@ -140,7 +140,12 @@ export default {
         let count =0;
         for (let key in res.data.data){
             console.log(res.data.data[key]);
-            count += res.data.data[key].vmatch_vuls.length;
+            if('vmatch_vuls' in res.data.data[key]){
+              count += res.data.data[key].vmatch_vuls.length;
+            }
+            if('poc_vuls' in res.data.data[key]){
+              count += res.data.data[key].poc_vuls.length;
+            }
         }
         this.result.vuls = count;
         this.Data.push(this.result)

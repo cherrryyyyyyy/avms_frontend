@@ -10,7 +10,7 @@
           changeMenu为调整缩放函数，绑定在click事件上，在methods中对changeMenu进行定义
         -->
         <i class="el-icon-s-operation" @click="changeMenu"></i>
-        <span slot="title">原子组件配置系统</span>
+        <span slot="title">资产与漏洞管理子系统</span>
       </el-menu-item>
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
@@ -46,6 +46,10 @@
         <i class="el-icon-postcard"></i>
         <span slot="title">任务</span>
       </el-menu-item>
+      <el-menu-item index="/result/index">
+        <i class="el-icon-document"></i>
+        <span slot="title">结果</span>
+      </el-menu-item>
       <el-submenu index="/strategy">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -54,9 +58,6 @@
         <el-menu-item-group>
           <el-menu-item index="/strategy/index">端口扫描策略</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="/pocmethod/index">POC扫描策略</el-menu-item>
-        </el-menu-item-group>        
       </el-submenu>
       <el-submenu index="/resource">
         <template slot="title">
@@ -73,10 +74,6 @@
           <el-menu-item index="/pocview/index">POC资源</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="/result/index">
-        <i class="el-icon-document"></i>
-        <span slot="title">结果</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>

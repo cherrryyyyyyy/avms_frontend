@@ -111,7 +111,7 @@ export default {
     TargetDetail(index, row) {
       console.log(index, row);
       index += (this.page - 1) * 10;
-      this.showdetail(index)
+      this.showdetail(row)
     },
     TargetDelete(index, row) {
       console.log(index, row);

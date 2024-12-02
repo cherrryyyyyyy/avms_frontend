@@ -54,7 +54,7 @@
                 show-overflow-tooltip="true">
                 <template slot-scope="scope">
                   <el-progress :text-inside="true" :stroke-width="26"
-                    :percentage="scope.row.status == 1 ? 0 : scope.row.status == 2 ? 25 :scope.row.status == 3 ? 60 : scope.row.status == 4 ? 100 : 0"></el-progress>
+                    :percentage="scope.row.status == 1 ? 0 : scope.row.status == 2 ? 25 :scope.row.status == 3 ? 25+75*scope.row.progress/100 : scope.row.status == 4 ? 100 : 0"></el-progress>
                 </template>
               </el-table-column>
               <el-table-column label="操作" align="center">

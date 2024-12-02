@@ -15,6 +15,7 @@
             <el-menu-item index="/result/resultdetail/taskoverview">任务概况</el-menu-item>
             <el-menu-item index="/result/resultdetail/assetstatistics">目标信息</el-menu-item>
             <el-menu-item index="/result/resultdetail/hostvulnerability" :disabled="this.vulbool">主机漏洞</el-menu-item>
+            <el-menu-item index="/result/resultdetail/pocvulnerability" :disabled="this.pocbool">已验证漏洞</el-menu-item>
         </el-menu>
         <div class="wrapper">
             <el-row>
@@ -70,7 +71,7 @@
                                 <span slot="label" class="fontClass">端口</span>
                                 <div class="fontClass">
                                     <el-card class="box-card">
-                                        <div v-for="port in this.hostSelectData.ports_opened" :key="port"
+                                        <div v-for="port in this.hostSelectData.ports_detail" :key="port"
                                             class="text item">
                                             {{ port.port_id }}
                                         </div>
@@ -79,23 +80,37 @@
                             </el-descriptions-item>
 
 
-                            <el-descriptions-item labelStyle="width: 156px">
-                                <span slot="label" class="fontClass">端口详细信息</span>
+                            <el-descriptions-item labelStyle="width: 156px;height: 500px">
+                                <span slot="label" class="fontClass">服务详细信息</span>
                                 <div class="fontClass">
-                                    <el-table :data="this.hostSelectData.ports_detail" height=100% border
+                                    <el-table :data="this.SelectServiceData" height=500px border
                                         highlight-current-row style="width: 100%">
-                                        <el-table-column prop="port_id" label="端口号" show-overflow-tooltip="true"
-                                            >
-                                        </el-table-column>
-                                        <el-table-column prop="banners" label="服务名称" show-overflow-tooltip="true" >
-                                            <template slot-scope="scope">
-                                               {{ Object.keys(scope.row.banners)[0] }} 
+                                        <el-table-column type="expand">
+                                            <template slot-scope="props">
+                                                <div>
+                                                    <json-viewer :value="props.row.assets" :expand-depth="5" copyable boxed sort class="w-100%"></json-viewer>
+                                                </div>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="value.summary" label="服务版本" show-overflow-tooltip="true">
-                                            <template slot-scope="scope">
-                                                {{scope.row.banners[Object.keys(scope.row.banners)[0]].version}}
-                                             </template>
+                                        <el-table-column prop="id" label="端口号" show-overflow-tooltip="true">
+                                        </el-table-column>
+                                    </el-table>
+                                </div>
+                            </el-descriptions-item>
+
+                            <el-descriptions-item labelStyle="width: 156px;height: 500px">
+                                <span slot="label" class="fontClass">旗标详细信息</span>
+                                <div class="fontClass">
+                                    <el-table :data="this.SelectServiceData" height=500px border
+                                        highlight-current-row style="width: 100%">
+                                        <el-table-column type="expand">
+                                            <template slot-scope="props">
+                                                <div>
+                                                    <json-viewer :value="props.row.banners" :expand-depth="5" copyable boxed sort class="w-100%"></json-viewer>
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="id" label="端口号" show-overflow-tooltip="true">
                                         </el-table-column>
                                     </el-table>
                                 </div>
@@ -112,12 +127,18 @@
 
 <script>
 //import Pagination from '@/component/pagination/page-tabs.vue'
+import JsonViewer from 'vue-json-viewer'
 export default {
+    components: {
+        JsonViewer
+    },
     data() {
         return {
             hostData: this.hostD,
             hostSelectData: [],
             vulbool: false,
+            pocbool: false,
+            SelectServiceData: [],
 
         }
     },
@@ -133,19 +154,103 @@ export default {
         },
         handleCurrentChange(val) {
             this.hostSelectData = val;
+            this.SelectServiceData = [];
             console.log(this.hostSelectData);
+            for(let data of this.hostSelectData.ports_detail){
+            let text = {
+                id : data.port_id
+            }
+            text['assets'] = [];
+            text['banners'] =[];
+            //console.log(data);
+            for(let key in data.assets){
+                //console.log(data.assets[key]['service.product'])
+                if(data.assets[key]['service.product'] == ''){
+                    continue;
+                }
+                let text1 = {
+                    name: key
+                }
+                for(let key1 in data.assets[key])
+                {
+                    text1[key1] = data.assets[key][key1];
+                }
+                //console.log(text1);
+                text['assets'].push(text1);
+            }
+            for(let key2 in data.banners){
+                let text2 ={
+                    name: key2
+                }
+                for(let bannerkey in data.banners[key2]){
+                    text2[bannerkey] = data.banners[key2][bannerkey];
+                }
+                text['banners'].push(text2);
+            }
+            
+            this.SelectServiceData.push(text);
+            
+        }
+        console.log('service_data',this.SelectServiceData);
         }
     },
     created() {
         console.log('chuang!!', this.hostData);
-        let vuls =0;
-        for(let data of this.hostData){
-            vuls+=data.vmatch_vuls.length;
+        let vuls = 0;
+        let pocs = 0;
+        for (let data of this.hostData) {
+            if('vmatch_vuls' in data){
+                vuls += data.vmatch_vuls.length;
+            }
         }
-        if(vuls == 0){
+        if (vuls == 0) {
             this.vulbool = true;
         }
+        for(let data of this.hostData){
+            if('poc_vuls' in data){
+                pocs+=data.poc_vuls.length;
+            }
+        }
+        if(pocs == 0){
+            this.pocbool = true;
+        }
+        this.SelectServiceData = [];
         this.hostSelectData = this.hostData[0];
+        for(let data of this.hostSelectData.ports_detail){
+            let text = {
+                id : data.port_id
+            }
+            text['assets'] = [];
+            text['banners'] =[];
+            //console.log(data);
+            for(let key in data.assets){
+                //console.log(data.assets[key]['service.product'])
+                if(data.assets[key]['service.product'] == ''){
+                    continue;
+                }
+                let text1 = {
+                    name: key
+                }
+                for(let key1 in data.assets[key])
+                {
+                    text1[key1] = data.assets[key][key1];
+                }
+                //console.log(text1);
+                text['assets'].push(text1);
+            }
+            for(let key2 in data.banners){
+                let text2 ={
+                    name: key2
+                }
+                for(let bannerkey in data.banners[key2]){
+                    text2[bannerkey] = data.banners[key2][bannerkey];
+                }
+                text['banners'].push(text2);
+            }
+            this.SelectServiceData.push(text);
+            
+        }
+        console.log('service_data',this.SelectServiceData);
     }
 }
 </script>
@@ -157,8 +262,8 @@ export default {
     border-bottom: 2px solid black;
     display: flex;
     align-items: center;
-  
-  }
+
+}
 
 .wrapper_left {
     padding: 10px;

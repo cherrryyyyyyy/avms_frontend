@@ -15,6 +15,7 @@
             <el-menu-item index="/result/resultdetail/taskoverview">任务概况</el-menu-item>
             <el-menu-item index="/result/resultdetail/assetstatistics">目标信息</el-menu-item>
             <el-menu-item index="/result/resultdetail/hostvulnerability" :disabled="this.vulbool">主机漏洞</el-menu-item>
+            <el-menu-item index="/result/resultdetail/pocvulnerability" :disabled="this.pocbool">已验证漏洞</el-menu-item>
         </el-menu>
 
         <div class="wrapper">
@@ -94,6 +95,7 @@ export default {
             alive_scan_methods: [],
             asmethod: '',
             status: '',
+            pocbool:false,
             vulbool: false
         }
     },
@@ -132,11 +134,22 @@ export default {
         this.getscanmethod();
         console.log('chuang!!!!!!', this.hostData, this.taskData, this.alive_scan_methods);
         let vuls =0;
+        let pocs =0;
         for(let data of this.hostData){
-            vuls+=data.vmatch_vuls.length;
+            if('vmatch_vuls' in this.hostData){
+                vuls += data.vmatch_vuls.length;
+            }
         }
         if(vuls == 0){
             this.vulbool = true;
+        }
+        for(let data of this.hostData){
+            if('poc_vuls' in data){
+                pocs+=data.poc_vuls.length;
+            }
+        }
+        if(pocs == 0){
+            this.pocbool = true;
         }
         if(this.taskData.status == 3){
             this.status = '进行中'

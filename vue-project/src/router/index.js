@@ -37,6 +37,7 @@ import FingerPrints_index from "@/views/fingerprints/fingerprints-index/fingerpr
 import FingerPrints_detail from "@/views/fingerprints/fingerprints-detail/fingerprints-detail.vue"
 import PocView from "@/views/pocview/pocview-index.vue"
 import PocView_index from "@/views/pocview/pocview_index/pocview_index.vue"
+import Poc_Vulnerability from "@/views/result/result_detail/poc_vulnerability/poc_vulnerability.vue"
 
 
 const Elements = ()=>import('@/views/elements/element-index.vue')
@@ -153,6 +154,11 @@ const routes=[
                             path:'hostvulnerability',
                             name: Host_Vulnerability,
                             component: Host_Vulnerability
+                        },
+                        {
+                            path:'pocvulnerability',
+                            name: Poc_Vulnerability,
+                            component: Poc_Vulnerability
                         },
                     ]
                 }
